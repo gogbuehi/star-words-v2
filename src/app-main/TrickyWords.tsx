@@ -51,7 +51,7 @@ const WordBox = styled.div`
   color: #e0d080;
   background-color: #302000;
   font-weight: bold;
-  font-size: xxx-large;
+  font-size: 36px;
   width: fit-content;
   display: inline-block;
 `;
