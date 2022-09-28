@@ -28,7 +28,14 @@ const TrickyWords = () => {
     </div>
     <div>
       {Array.from(trickyWords.values()).map((value, index) => {
-        return <TrickyWordBox key={index}>{`${value}`}</TrickyWordBox>
+        return <TrickyWordBox key={index}
+        onClick={() => {
+          console.log(`Remove tricky word: ${value}`);
+          trickyWords.delete(value);
+          const updatedTrickyWords = new Set(trickyWords.values());
+          setTrickyWords(updatedTrickyWords);
+        }
+        }>{`${value}`}</TrickyWordBox>
       })}
     </div>
   </div>
