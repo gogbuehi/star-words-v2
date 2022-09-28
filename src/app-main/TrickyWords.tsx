@@ -5,17 +5,31 @@ const TrickyWords = () => {
   const [wordIndex, setWordIndex] = useState(0);
   const [randomWordList, setRandomWordList] = useState(WORD_LIST);
   const [wordRound, setWordRound] = useState(1);
-  // const [trickyWords, setTrickyWords] = useState([]);
+  const [trickyWords, setTrickyWords] = useState(new Set());
 
   const WordBoxComponent = wordRound === 1 ? WordBox : WordBoxRound2;
   return <div>
     <h1>Tricky Words</h1>
+    <h2><WordBoxComponent>Round: {wordRound}</WordBoxComponent></h2>
     <div>
-      <h2>What's the word?</h2>
+      <h2>Read the word</h2>
       <WordBoxComponent
       onClick={() => { nextWord(wordIndex, wordRound, setWordIndex, setRandomWordList, setWordRound); }}
       >{randomWordList[wordIndex]}</WordBoxComponent>
-      <TrickyWordButton>TRICKY</TrickyWordButton>
+      <br />
+      <TrickyWordButton
+      onClick={() => {
+        console.log(`Add tricky word: ${randomWordList[wordIndex]}`);
+        trickyWords.add(randomWordList[wordIndex]);
+        const updatedTrickyWords = new Set(trickyWords.values());
+        setTrickyWords(updatedTrickyWords);
+      }}
+      >TRICKY</TrickyWordButton>
+    </div>
+    <div>
+      {Array.from(trickyWords.values()).map((value, index) => {
+        return <TrickyWordBox key={index}>{`${value}`}</TrickyWordBox>
+      })}
     </div>
   </div>
 }
@@ -55,6 +69,21 @@ const TrickyWordButton = styled.button`
   font-size: x-large;
   width: fit-content;
 
+`;
+
+const TrickyWordBox = styled.div`
+  border: solid 1px darkolivegreen;
+  border-radius: 30px;
+  padding: 10px;
+  margin: 5px;
+  text-align: center;
+  vertical-align: center;
+  color: #80e0d0;
+  background-color: #000030;
+  font-weight: bold;
+  font-size: x-large;
+  width: fit-content;
+  display: inline-block;
 `;
 
 const WORD_LIST = [
