@@ -1,17 +1,25 @@
 import React from 'react';
+import {
+  BrowserRouter, Route,  Routes
+} from "react-router-dom";
 import './App.css';
 import {TrickyWords} from "./app-main/TrickyWords";
+import {HomePage} from "./app-main/HomePage";
+import {NotFound} from "./app-main/NotFound";
+import Layout from "./app-main/Layout";
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Star Words</h1>
-      </header>
-      <div>
-        <TrickyWords />
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="words" element={<TrickyWords />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

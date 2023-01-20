@@ -10,9 +10,13 @@ const TrickyWords = () => {
   const WordBoxComponent = wordRound === 1 ? WordBox : WordBoxRound2;
   return <div>
     <h1>Tricky Words</h1>
-    <h2><WordBoxComponent>Round: {wordRound}</WordBoxComponent></h2>
-    <div>
-      <h2>Read the word</h2>
+
+    <CenterContent>
+      {/*<TypingInput />*/}
+      <TextBox>Round: {wordRound}</TextBox>
+      <br />
+      <TextBox>Read the word</TextBox>
+      <br />
       <WordBoxComponent
       onClick={() => { nextWord(wordIndex, wordRound, setWordIndex, setRandomWordList, setWordRound); }}
       >{randomWordList[wordIndex]}</WordBoxComponent>
@@ -25,7 +29,7 @@ const TrickyWords = () => {
         setTrickyWords(updatedTrickyWords);
       }}
       >TRICKY</TrickyWordButton>
-    </div>
+    </CenterContent>
     <div>
       {Array.from(trickyWords.values()).map((value, index) => {
         return <TrickyWordBox key={index}
@@ -40,8 +44,24 @@ const TrickyWords = () => {
     </div>
   </div>
 }
-
-const WordBox = styled.div`
+export const CenterContent = styled.h2`
+  text-align: center;
+  width: available;
+  
+`;
+export const TextBox = styled.div`
+  border: solid 2px #61dafb;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  width: fit-content;
+  text-align: center;
+  vertical-align: center;
+  color: aliceblue;
+  background-color: #282c34;
+  display: inline-block;
+`;
+export const WordBox = styled.div`
   border: solid 3px yellow;
   border-radius: 30px;
   padding: 30px;
