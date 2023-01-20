@@ -14,7 +14,6 @@ function TypingInput(propsReceived: TypingInputProps) {
     answerText,
     textToMatch
   } = propsReceived;
-  console.log(`hmmm... ${textToMatch}`);
   const [typedText, setTypedText] = useState('');
   //const [answerText, setAnswerText] = useState(typedText);
   const [boxToUse, setBoxToUse] = useState((textToMatch === answerText) ? 'green':'yellow');
@@ -23,21 +22,11 @@ function TypingInput(propsReceived: TypingInputProps) {
     if (boxToUse === 'green' || answerText === '') BoxToUse = NeutralBox;
     else BoxToUse = IncorrectBox;
   } else BoxToUse = CorrectBox;
-  // switch(boxToUse) {
-  //   case 'red':
-  //     BoxToUse = IncorrectBox;
-  //     break;
-  //   case 'green':
-  //     BoxToUse = CorrectBox;
-  //     break;
-  //   default:
-  //     BoxToUse = NeutralBox;
-  // }
-  return <p>
+  return <div>
     <BoxToUse>{answerText}</BoxToUse>
     <br />
     <input type={'text'} value={typedText}
-     defaultValue={''}
+           onChange={()=>{}}
     onKeyDown={({key, keyCode}) => {
       if(key.length === 1) {
         console.log(key, keyCode);
@@ -66,7 +55,7 @@ function TypingInput(propsReceived: TypingInputProps) {
 
     }}
     />
-  </p>
+  </div>
 }
 
 export default TypingInput;
