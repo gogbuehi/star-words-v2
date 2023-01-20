@@ -41,17 +41,11 @@ const PracticeMaths = () => {
     setTextToMatch(`${actual1stNumber * actual2ndNumber}`);
     setAnswerText('');
   }
-  return <div>
-    <h1>Practice Maths</h1>
-
+  return <CenterContent>
     <CenterContent>
-      <TextBox>{firstNumber} X {secondNumber} = ?</TextBox>
-    </CenterContent>
-    <CenterContent>
-      <TextBox>
-        Answer
-      </TextBox>
-      <TypingInput
+      <TopNumberBox>{firstNumber} X {secondNumber} = ?</TopNumberBox>
+      <TopNumberBox>
+        <TypingInput
         borderColor={isCorrect ? 'green' : 'red'}
         textToMatch={textToMatch}
         answerText={answerText}
@@ -68,15 +62,15 @@ const PracticeMaths = () => {
             setIsCorrect(false);
           }
         }
-      }
-      />
+        }
+      /></TopNumberBox>
     </CenterContent>
     <CenterContent>
       <RightStatsBox>
         {starDisplay(rightCount)}
       </RightStatsBox>
       <AttemptedStatsBox>{starDisplay(attemptedCount)}</AttemptedStatsBox>
-      <StatsBox>Average Time to Answer: </StatsBox>
+      {/*<StatsBox>Average Time to Answer: </StatsBox>*/}
     </CenterContent>
     <CenterContent>
       {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num, index) => {
@@ -93,7 +87,7 @@ const PracticeMaths = () => {
         >{num}</NumBox>)
       })}
     </CenterContent>
-  </div>
+  </CenterContent>
 }
 
 export default PracticeMaths;
@@ -114,8 +108,12 @@ const randomInteger = (maxNumber: number): number => {
 const NumberBox = styled(WordBox)`
   border-color: cornflowerblue;
   background-color: lightblue;
-  display: inline-block;
+  display: inline-flex;
   color: black;
+`;
+
+const TopNumberBox = styled(NumberBox)`
+  height: 250px;
 `;
 
 const SelectedNumberBox = styled(NumberBox)`

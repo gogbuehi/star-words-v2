@@ -26,7 +26,7 @@ const Layout = () => {
 export default Layout;
 
 const TopMenuItem = styled.li`
-  display: inline-block;
+  display: inline-flex;
   padding: 10px;
   border: solid 3px #282c34;
   border-radius: 5px;

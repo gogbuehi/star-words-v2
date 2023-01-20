@@ -44,9 +44,10 @@ const TrickyWords = () => {
     </div>
   </div>
 }
-export const CenterContent = styled.h2`
+export const CenterContent = styled.div`
   text-align: center;
   width: available;
+  vertical-align: center;
   
 `;
 export const TextBox = styled.div`
@@ -59,7 +60,7 @@ export const TextBox = styled.div`
   vertical-align: center;
   color: aliceblue;
   background-color: #282c34;
-  display: inline-block;
+  display: inline-flex;
 `;
 export const WordBox = styled.div`
   border: solid 3px yellow;
@@ -73,7 +74,7 @@ export const WordBox = styled.div`
   font-weight: bold;
   font-size: 36px;
   width: fit-content;
-  display: inline-block;
+  display: inline-flex;
 `;
 
 const WordBoxRound2 = styled(WordBox)`
@@ -110,7 +111,7 @@ const TrickyWordBox = styled.div`
   font-weight: bold;
   font-size: x-large;
   width: fit-content;
-  display: inline-block;
+  display: inline-flex;
 `;
 
 const WORD_LIST = [

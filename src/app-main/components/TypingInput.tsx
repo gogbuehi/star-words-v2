@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {WordBox} from "../TrickyWords";
+import {CenterContent, WordBox} from "../TrickyWords";
 import styled from "styled-components";
 
 type CallbackFunction = (a: string) => void;
@@ -22,10 +22,8 @@ function TypingInput(propsReceived: TypingInputProps) {
     if (boxToUse === 'green' || answerText === '') BoxToUse = NeutralBox;
     else BoxToUse = IncorrectBox;
   } else BoxToUse = CorrectBox;
-  return <div>
-    <BoxToUse>{answerText}</BoxToUse>
-    <br />
-    <input type={'text'} value={typedText}
+  return <CenterContent>
+    <EInput type={'text'} value={typedText}
            onChange={()=>{}}
     onKeyDown={({key, keyCode}) => {
       if(key.length === 1) {
@@ -55,7 +53,9 @@ function TypingInput(propsReceived: TypingInputProps) {
 
     }}
     />
-  </div>
+    <br />
+    <BoxToUse>{answerText}</BoxToUse>
+  </CenterContent>
 }
 
 export default TypingInput;
@@ -63,12 +63,38 @@ export default TypingInput;
 const CorrectBox = styled(WordBox)`
   border-color: green;
   background-color: lightgreen;
+  height: 50px;
+  width: 80px;
+  text-align: center;
+  display: inline-block;
 `;
 const IncorrectBox = styled(WordBox)`
   border-color: red;
   background-color: lightsalmon;
+  height: 50px;
+  width: 80px;
+  text-align: center;
+  display: inline-block;
 `;
 const NeutralBox = styled(WordBox)`
   border-color: brown;
   background-color: lightyellow;
+  height: 50px;
+  width: 80px;
+  text-align: center;
+  display: inline-block;
+`;
+
+const EInput = styled.input`
+  border: solid 2px #61dafb;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  width: fit-content;
+  text-align: center;
+  vertical-align: center;
+  color: aliceblue;
+  font-size: 24pt;
+  background-color: #282c34;
+  display: inline-flex;
 `;
