@@ -23,10 +23,10 @@ function TypingInput(propsReceived: TypingInputProps) {
     else BoxToUse = IncorrectBox;
   } else BoxToUse = CorrectBox;
   return <CenterContent>
-    <EInput type={'text'} value={typedText}
+    <EInput type={'number'} value={typedText}
            onChange={()=>{}}
     onKeyDown={({key, keyCode}) => {
-      if(key.length === 1) {
+      if(key.length === 1 && key ===`${parseInt(key)}`) {
         console.log(key, keyCode);
         const updatedText = `${typedText}${key}`;
         setTypedText(updatedText);
@@ -63,6 +63,7 @@ export default TypingInput;
 const CorrectBox = styled(WordBox)`
   border-color: green;
   background-color: lightgreen;
+  color: darkgreen;
   height: 50px;
   width: 80px;
   text-align: center;
@@ -71,6 +72,7 @@ const CorrectBox = styled(WordBox)`
 const IncorrectBox = styled(WordBox)`
   border-color: red;
   background-color: lightsalmon;
+  color: darkred;
   height: 50px;
   width: 80px;
   text-align: center;
@@ -79,6 +81,7 @@ const IncorrectBox = styled(WordBox)`
 const NeutralBox = styled(WordBox)`
   border-color: brown;
   background-color: lightyellow;
+  color: black;
   height: 50px;
   width: 80px;
   text-align: center;
