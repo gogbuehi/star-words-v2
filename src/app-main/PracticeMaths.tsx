@@ -22,7 +22,7 @@ const PracticeMaths = () => {
   const [rightCount, setRightCount] = useState(0);
   // const [averageTime, setAverageTime] = useState(-1);
 
-  const setProblem = (actualFixedNumber: number) =>  () => {
+  const setProblem = (actualFixedNumber: number, sequenceNumber: number) =>  () => {
     const {firstNumber, secondNumber} = timesTableNumbers();
     let actual1stNumber = firstNumber;
     let actual2ndNumber = secondNumber;
@@ -56,7 +56,7 @@ const PracticeMaths = () => {
             console.log("CORRECT");
             setIsCorrect(true);
             setRightCount(rightCount +1);
-            setTimeout(setProblem(fixedNumber), 1000);
+            setTimeout(setProblem(fixedNumber, sequenceNumber), 1000);
           } else {
             console.log("INCORRECT");
             setIsCorrect(false);
@@ -80,7 +80,7 @@ const PracticeMaths = () => {
                      onClick={() => {
                        setFixedNumber(num);
                        setSequenceNumber(0);
-                       setProblem(num)();
+                       setProblem(num,0)();
                      }
                      }
 
