@@ -1,7 +1,9 @@
-import {CenterContent, TextBox, WordBox} from "./TrickyWords";
+import {CenterContent, WordBox} from "./TrickyWords";
 import {useState} from "react";
 import TypingInput from "./components/TypingInput";
 import styled from "styled-components";
+import {NumPad} from "./components/NumPad";
+import {Timer} from "./components/Timer";
 const checkAnswer = (submittedAnswer: string, correctAnswer: number): boolean => {
   const numericAnswer = parseInt(submittedAnswer);
   // Validate as a number
@@ -20,6 +22,11 @@ const PracticeMaths = () => {
 
   const [attemptedCount, setAttemptedCount] = useState(0);
   const [rightCount, setRightCount] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(30);
+  const [problemNumber, setProblemNumber] = useState(1);
+  const [endTime, setEndTime] = useState(0);
+  const [avgTime, setAvgTime] = useState(0);
+  const [lastTime, setLastTime] = useState(0);
   // const [averageTime, setAverageTime] = useState(-1);
 
   const setProblem = (actualFixedNumber: number, sequenceNumber: number) =>  () => {
@@ -40,10 +47,19 @@ const PracticeMaths = () => {
     setSecondNumber(actual2ndNumber);
     setTextToMatch(`${actual1stNumber * actual2ndNumber}`);
     setAnswerText('');
+    setTimeLeft(30);
+    setProblemNumber(problemNumber+1);
   }
   return <CenterContent>
     <CenterContent>
-      <TopNumberBox>{firstNumber} X {secondNumber} = ?</TopNumberBox>
+      <CenterContent>
+        <StatsBox>{firstNumber} X {secondNumber} = ?</StatsBox>
+        <StatsBox><Timer
+          timeInSeconds={timeLeft}
+          problemNumber={problemNumber}
+          storeEndTime={(endTime) => {setEndTime(endTime)}}
+        /></StatsBox>
+      </CenterContent>
       <TopNumberBox>
         <TypingInput
         borderColor={isCorrect ? 'green' : 'red'}
@@ -53,7 +69,8 @@ const PracticeMaths = () => {
           setAnswerText(value);
           setAttemptedCount(attemptedCount+1);
           if (checkAnswer(value, (firstNumber * secondNumber))) {
-            console.log("CORRECT");
+            console.log("CORRECT", endTime - (new Date().getTime()));
+
             setIsCorrect(true);
             setRightCount(rightCount +1);
             setTimeout(setProblem(fixedNumber, sequenceNumber), 1000);
@@ -63,14 +80,54 @@ const PracticeMaths = () => {
           }
         }
         }
-      /></TopNumberBox>
+      />
+      </TopNumberBox>
+      <TopNumberBox>
+        <NumPad
+          pressCallback={(a:string) => {
+            switch(a) {
+              case '-':
+                if (answerText.length > 0) {
+                  setAnswerText(answerText.substring(0, answerText.length-1));
+                }
+                break;
+              case '':
+                // submit answer
+                setAttemptedCount(attemptedCount+1);
+                if (checkAnswer(answerText, (firstNumber * secondNumber))) {
+                  const timeToSolve = timeLeft - Math.floor((endTime - (new Date().getTime()))/1000);
+                  setLastTime(timeToSolve);
+                  if (attemptedCount === 0) {
+                    setAvgTime(timeToSolve);
+                  } else {
+                    const updatedAvgTime = ((attemptedCount) * avgTime + timeToSolve)/(attemptedCount+1);
+                    setAvgTime(updatedAvgTime);
+
+                  }
+                  console.log("CORRECT", avgTime, timeToSolve);
+                  setIsCorrect(true);
+                  setRightCount(rightCount +1);
+                  setTimeout(setProblem(fixedNumber, sequenceNumber), 1000);
+                } else {
+                  console.log("INCORRECT");
+                  setIsCorrect(false);
+                }
+                break;
+              default:
+                setAnswerText(answerText + a);
+            }
+
+          }
+          }
+        />
+      </TopNumberBox>
     </CenterContent>
     <CenterContent>
       <RightStatsBox>
         {starDisplay(rightCount)}
       </RightStatsBox>
       <AttemptedStatsBox>{starDisplay(attemptedCount)}</AttemptedStatsBox>
-      {/*<StatsBox>Average Time to Answer: </StatsBox>*/}
+      <AttemptedStatsBox>Time: {lastTime}s<br />Avg: {(avgTime).toFixed(2)}s</AttemptedStatsBox>
     </CenterContent>
     <CenterContent>
       {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num, index) => {

@@ -99,5 +99,6 @@ const EInput = styled.input`
   color: aliceblue;
   font-size: 24pt;
   background-color: #282c34;
-  display: inline-flex;
+  //display: inline-flex;
+  display: none;
 `;
