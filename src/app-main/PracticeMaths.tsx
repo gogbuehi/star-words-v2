@@ -49,6 +49,7 @@ const PracticeMaths = () => {
     setAnswerText('');
     setTimeLeft(30);
     setProblemNumber(problemNumber+1);
+    setIsCorrect(false);
   }
   return <CenterContent>
     <CenterContent>
@@ -92,6 +93,9 @@ const PracticeMaths = () => {
                 }
                 break;
               case '':
+                if (isCorrect || answerText === '') {
+                  break;
+                }
                 // submit answer
                 setAttemptedCount(attemptedCount+1);
                 if (checkAnswer(answerText, (firstNumber * secondNumber))) {
@@ -100,6 +104,11 @@ const PracticeMaths = () => {
                   if (attemptedCount === 0) {
                     setAvgTime(timeToSolve);
                   } else {
+                    if (timeToSolve > avgTime) {
+                      console.log("Slower than average");
+                    } else {
+                      console.log("Doing great!");
+                    }
                     const updatedAvgTime = ((attemptedCount) * avgTime + timeToSolve)/(attemptedCount+1);
                     setAvgTime(updatedAvgTime);
 
@@ -124,9 +133,14 @@ const PracticeMaths = () => {
     </CenterContent>
     <CenterContent>
       <RightStatsBox>
+        Correct: {rightCount}
+        <br />
         {starDisplay(rightCount)}
       </RightStatsBox>
-      <AttemptedStatsBox>{starDisplay(attemptedCount)}</AttemptedStatsBox>
+      <AttemptedStatsBox>
+        Tries: {attemptedCount}
+        <br />
+        {starDisplay(attemptedCount)}</AttemptedStatsBox>
       <AttemptedStatsBox>Time: {lastTime}s<br />Avg: {(avgTime).toFixed(2)}s</AttemptedStatsBox>
     </CenterContent>
     <CenterContent>
@@ -181,27 +195,27 @@ const SelectedNumberBox = styled(NumberBox)`
 
 const StatsBox = styled(WordBox)`
   font-size: small;
-  width: 200px;
+  width: 150px;
+  text-align: left;
 `;
 
 const RightStatsBox = styled(StatsBox)`
   border-color: green;
   background-color: lightgreen;
   color: black;
-  width: 100px;
 `;
 const AttemptedStatsBox = styled(StatsBox)`
   border-color: purple;
   background-color: lightgrey;
   color: black;
-  width: 100px;
+  
 `;
 
 const starDisplay = (starCount: number) => {
   let displayString = '';
-  for(let i =0; i < starCount; i++) {
-    displayString += '*';
+  for(let i =0; i < starCount && i < 20; i++) {
+    displayString += `*`;
     if (i%5 === 4) displayString += ' ';
   }
-  return displayString;
+  return displayString; // + (starCount > 20 ? ` ...${starCount}` : '');
 }
