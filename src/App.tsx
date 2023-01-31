@@ -7,6 +7,7 @@ import {TrickyWords} from "./app-main/TrickyWords";
 import {HomePage} from "./app-main/HomePage";
 import {NotFound} from "./app-main/NotFound";
 import Layout from "./app-main/Layout";
+import {Giraffe} from "./Giraffe";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="words" element={<TrickyWords />} />
+          <Route path="giraffe" element={<Giraffe />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

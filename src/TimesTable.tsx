@@ -23,7 +23,9 @@ const generateTimesTable = (algorithmNum: string, size: number, clickCallback: (
     tableRows.push(generateTimesRow(algorithmNum, size, i, clickCallback));
   }
   return (<TableA>
+    <tbody>
     {tableRows}
+    </tbody>
   </TableA>)
 }
 

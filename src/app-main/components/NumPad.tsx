@@ -9,6 +9,7 @@ export const NumPad = (propsRecieved: NumPadProps) => {
     pressCallback(num);
   }
   return (<NumTable>
+    <tbody>
     <tr>
       <NumCell onClick={clickMethod('7')}>7</NumCell>
       <NumCell onClick={clickMethod('8')}>8</NumCell>
@@ -29,6 +30,7 @@ export const NumPad = (propsRecieved: NumPadProps) => {
       <NumCell onClick={clickMethod('0')}>0</NumCell>
       <NumCell onClick={clickMethod('')}>x</NumCell>
     </tr>
+    </tbody>
   </NumTable>)
 };
 

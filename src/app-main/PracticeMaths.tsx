@@ -54,7 +54,7 @@ const PracticeMaths = () => {
   return <CenterContent>
     <CenterContent>
       <CenterContent>
-        <StatsBox>{firstNumber} X {secondNumber} = ?</StatsBox>
+        <ProblemBox>{firstNumber} X {secondNumber} = ?</ProblemBox>
         <StatsBox><Timer
           timeInSeconds={timeLeft}
           problemNumber={problemNumber}
@@ -196,18 +196,31 @@ const SelectedNumberBox = styled(NumberBox)`
 const StatsBox = styled(WordBox)`
   font-size: small;
   width: 150px;
-  text-align: left;
+  text-align: center;
+  font-family: "Courier New";
+  border-color: darkslateblue;
+  background-color: black;
+  color: yellow;
+`;
+
+const ProblemBox = styled(StatsBox)`
+  font-size: x-large;
+  background-color: darkgray;
+  color: black;
+  border-color: darkslateblue;
 `;
 
 const RightStatsBox = styled(StatsBox)`
   border-color: green;
   background-color: lightgreen;
   color: black;
+  text-align: left;
 `;
 const AttemptedStatsBox = styled(StatsBox)`
   border-color: purple;
   background-color: lightgrey;
   color: black;
+  text-align: left;
   
 `;
 

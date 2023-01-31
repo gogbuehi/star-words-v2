@@ -8,6 +8,7 @@ import Layout from "./app-main/Layout";
 import {HomePage} from "./app-main/HomePage";
 import {TrickyWords} from "./app-main/TrickyWords";
 import {NotFound} from "./app-main/NotFound";
+import {Giraffe} from "./Giraffe";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -19,6 +20,7 @@ root.render(
         <Route index element={<HomePage />} />
         <Route path="words" element={<TrickyWords />} />
         <Route path="timestable" element={<Maths />} />
+        <Route path="giraffe" element={<Giraffe />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
