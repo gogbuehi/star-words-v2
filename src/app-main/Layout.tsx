@@ -13,7 +13,7 @@ const Layout = () => {
             <Link to="/timestable">Times Table</Link>
           </TopMenuItem>
           <TopMenuItem>
-            <Link to="/giraffe">Giraffe, Pelly, & Ne</Link>
+            <Link to="/giraffe">Giraffe, Pelly, & Me</Link>
           </TopMenuItem>
           {/*<TopMenuItem>*/}
           {/*  <Link to="/words">Tricky Words</Link>*/}
