@@ -7,7 +7,7 @@ interface ITimesTableProps  {
 }
 export const TimesTable = (props: ITimesTableProps) => {
   const [algorithmNum, setAlgorithmNum] = useState('100');
-  const TABLE_SIZE = 12;
+  const TABLE_SIZE = 20;
   const {offset} = props;
   const clickOnTable = (multiplier: number, i: number) => {
     setAlgorithmNum(`${multiplier}-${i}`);
