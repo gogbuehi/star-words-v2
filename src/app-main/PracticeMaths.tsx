@@ -4,6 +4,7 @@ import TypingInput from "./components/TypingInput";
 import styled from "styled-components";
 import {NumPad} from "./components/NumPad";
 import {Timer} from "./components/Timer";
+import {TimesTable} from "../TimesTable";
 const checkAnswer = (submittedAnswer: string, correctAnswer: number): boolean => {
   const numericAnswer = parseInt(submittedAnswer);
   // Validate as a number
@@ -29,6 +30,8 @@ const PracticeMaths = () => {
   const [lastTime, setLastTime] = useState(0);
   // const [averageTime, setAverageTime] = useState(-1);
 
+  const offset = fixedNumber > 0 ? fixedNumber - 1 : 0;
+
   const setProblem = (actualFixedNumber: number, sequenceNumber: number) =>  () => {
     const {firstNumber, secondNumber} = timesTableNumbers();
     let actual1stNumber = firstNumber;
@@ -52,6 +55,7 @@ const PracticeMaths = () => {
     setIsCorrect(false);
   }
   return <CenterContent>
+    {offset ? <TimesTable offset={offset}/> : ''}
     <CenterContent>
       <CenterContent>
         <ProblemBox>{firstNumber} X {secondNumber} = ?</ProblemBox>

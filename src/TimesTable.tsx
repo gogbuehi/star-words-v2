@@ -2,25 +2,39 @@ import {CenterContent} from "./app-main/TrickyWords";
 import styled from "styled-components";
 import {useState} from "react";
 
-export const TimesTable = () => {
+interface ITimesTableProps  {
+  offset?: number;
+}
+export const TimesTable = (props: ITimesTableProps) => {
   const [algorithmNum, setAlgorithmNum] = useState('100');
   const TABLE_SIZE = 12;
+  const {offset} = props;
   const clickOnTable = (multiplier: number, i: number) => {
     setAlgorithmNum(`${multiplier}-${i}`);
   }
   return (<CenterContent>
     <button onClick={() => {setAlgorithmNum('100')}}>RESET</button>
     <br />
-    {generateTimesTable(algorithmNum, TABLE_SIZE, clickOnTable)}
+    {generateTimesTable({
+      offset,
+      algorithmNum, size: TABLE_SIZE, clickCallback: clickOnTable})}
   </CenterContent>)
 
 
 }
 
-const generateTimesTable = (algorithmNum: string, size: number, clickCallback: (multiplier: number, i: number) => void) => {
+type TimesTableArgs = {
+  algorithmNum: string;
+  size: number;
+  offset?: number;
+  clickCallback: (multiplier: number, i: number) => void;
+}
+const generateTimesTable = (timesTableArgs: TimesTableArgs) => {
+  const {algorithmNum, size, offset, clickCallback} = timesTableArgs;
+  const rows = offset ? 1 : size;
   const tableRows = [];
-  for(let i = 1; i < size+1; i++) {
-    tableRows.push(generateTimesRow(algorithmNum, size, i, clickCallback));
+  for(let i = 1; i < rows+1; i++) {
+    tableRows.push(generateTimesRow({algorithmNum, size, offset, multiplier: i, clickCallback}));
   }
   return (<TableA>
     <tbody>
@@ -29,11 +43,20 @@ const generateTimesTable = (algorithmNum: string, size: number, clickCallback: (
   </TableA>)
 }
 
-const generateTimesRow = (algorithmNum: string, size: number, multiplier: number, clickCallback: (multiplier: number, i: number) => void) => {
+type TimesRowArgs = {
+  algorithmNum: string;
+  size: number;
+  multiplier: number;
+  clickCallback: (multiplier: number, i: number) => void;
+  offset?: number;
+}
+const generateTimesRow = (timesRowArg: TimesRowArgs) => {
+  const {algorithmNum, size, multiplier, clickCallback} = timesRowArg;
+  const offset = timesRowArg.offset || 0;
   const tableCell = [];
 
   for(let i = 1; i < (size+1); i++) {
-    tableCell.push(generateTimesCell(algorithmNum, multiplier, i, clickCallback) );
+    tableCell.push(generateTimesCell(algorithmNum, multiplier + offset, i, clickCallback) );
   }
   return (<tr key={`row-${multiplier}`}>{tableCell}</tr>);
 }
