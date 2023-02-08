@@ -5,6 +5,7 @@ import styled from "styled-components";
 import {NumPad} from "./components/NumPad";
 import {Timer} from "./components/Timer";
 import {TimesTable} from "../TimesTable";
+const MAX_SEQUENCE = 12;
 const checkAnswer = (submittedAnswer: string, correctAnswer: number): boolean => {
   const numericAnswer = parseInt(submittedAnswer);
   // Validate as a number
@@ -28,23 +29,37 @@ const PracticeMaths = () => {
   const [endTime, setEndTime] = useState(0);
   const [avgTime, setAvgTime] = useState(0);
   const [lastTime, setLastTime] = useState(0);
+  const [level, setLevel] = useState(1);
+  const [sequence, setSequence] = useState(generateRandomSequenceUpTo(MAX_SEQUENCE));
   // const [averageTime, setAverageTime] = useState(-1);
 
   const offset = fixedNumber > 0 ? fixedNumber - 1 : 0;
 
-  const setProblem = (actualFixedNumber: number, sequenceNumber: number) =>  () => {
+  const setProblem = (actualFixedNumber: number, sequenceNumber: number, level: number) =>  () => {
     const {firstNumber, secondNumber} = timesTableNumbers();
     let actual1stNumber = firstNumber;
     let actual2ndNumber = secondNumber;
     if (actualFixedNumber !== -1) {
-      if (Math.random() > 10.5) {
-        actual2ndNumber = actualFixedNumber;
-        actual1stNumber = sequenceNumber;
-      } else {
-        actual1stNumber = actualFixedNumber;
-        actual2ndNumber = sequenceNumber;
+      switch(level) {
+        case 1:
+          if (Math.random() > 10.5) {
+            actual2ndNumber = actualFixedNumber;
+            actual1stNumber = sequenceNumber;
+          } else {
+            actual1stNumber = actualFixedNumber;
+            actual2ndNumber = sequenceNumber;
+          }
+          setSequenceNumber(sequenceNumber+1);
+          break;
+        case 2:
+        case 3:
+        case 4:
+          actual1stNumber = actualFixedNumber;
+          actual2ndNumber = sequenceNumber < MAX_SEQUENCE ? sequence[sequenceNumber] : sequenceNumber;
+          setSequenceNumber(sequenceNumber+1);
+          break;
       }
-      setSequenceNumber(sequenceNumber+1);
+
     }
     setFirstNumber(actual1stNumber);
     setSecondNumber(actual2ndNumber);
@@ -54,8 +69,15 @@ const PracticeMaths = () => {
     setProblemNumber(problemNumber+1);
     setIsCorrect(false);
   }
+  const setLevelAndProblems = (level: number, fixedNumber=-1) => () => {
+    setLevel(level);
+    const actualFixedNumber = fixedNumber === -1 ? 2 : fixedNumber;
+    setFixedNumber(actualFixedNumber);
+    setSequenceNumber(0);
+    setProblem(actualFixedNumber, 0, level)();
+  }
   return <CenterContent>
-    {offset ? <TimesTable offset={offset}/> : ''}
+    {offset && (level < 3)? <TimesTable offset={offset}/> : ''}
     <CenterContent>
       <CenterContent>
         <ProblemBox>{firstNumber} X {secondNumber} = ?</ProblemBox>
@@ -65,7 +87,36 @@ const PracticeMaths = () => {
           storeEndTime={(endTime) => {setEndTime(endTime)}}
         /></StatsBox>
       </CenterContent>
+
+        <NumberBoxContainer>
+          <div>Number</div>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((num, index) => {
+            const NumBox = (num === fixedNumber) ? SelectedNumberBox : NumberBox;
+            return (
+              <NumBox key={index}
+                      onClick={() => {
+                        setFixedNumber(num);
+                        setSequenceNumber(0);
+                        setProblem(num,0, level)();
+                      }
+                      }
+
+              >{num}</NumBox>)
+          })}
+          <div>Level</div>
+          {[1, 2, 3, 4].map((num, index) => {
+            const NumBox = (num === level) ? SelectedNumberBox : NumberBox;
+            return (
+              <NumBox key={index}
+                      onClick={
+                        setLevelAndProblems(num, fixedNumber)
+                      }
+
+              >{num}</NumBox>)
+          })}
+        </NumberBoxContainer>
       <TopNumberBox>
+        <div>Answer</div>
         <TypingInput
         borderColor={isCorrect ? 'green' : 'red'}
         textToMatch={textToMatch}
@@ -78,7 +129,7 @@ const PracticeMaths = () => {
 
             setIsCorrect(true);
             setRightCount(rightCount +1);
-            setTimeout(setProblem(fixedNumber, sequenceNumber), 1000);
+            setTimeout(setProblem(fixedNumber, sequenceNumber, level), 1000);
           } else {
             console.log("INCORRECT");
             setIsCorrect(false);
@@ -120,7 +171,7 @@ const PracticeMaths = () => {
                   console.log("CORRECT", avgTime, timeToSolve);
                   setIsCorrect(true);
                   setRightCount(rightCount +1);
-                  setTimeout(setProblem(fixedNumber, sequenceNumber), 1000);
+                  setTimeout(setProblem(fixedNumber, sequenceNumber, level), 1000);
                 } else {
                   console.log("INCORRECT");
                   setIsCorrect(false);
@@ -134,6 +185,7 @@ const PracticeMaths = () => {
           }
         />
       </TopNumberBox>
+
     </CenterContent>
     <CenterContent>
       <RightStatsBox>
@@ -146,21 +198,6 @@ const PracticeMaths = () => {
         <br />
         {starDisplay(attemptedCount)}</AttemptedStatsBox>
       <AttemptedStatsBox>Time: {lastTime}s<br />Avg: {(avgTime).toFixed(2)}s</AttemptedStatsBox>
-    </CenterContent>
-    <CenterContent>
-      {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((num, index) => {
-        const NumBox = (num === fixedNumber) ? SelectedNumberBox : NumberBox;
-        return (
-          <NumBox key={index}
-                     onClick={() => {
-                       setFixedNumber(num);
-                       setSequenceNumber(0);
-                       setProblem(num,0)();
-                     }
-                     }
-
-        >{num}</NumBox>)
-      })}
     </CenterContent>
   </CenterContent>
 }
@@ -180,11 +217,26 @@ const randomInteger = (maxNumber: number): number => {
   return Math.floor(Math.random() * (maxNumber+1));
 }
 
+const NumberBoxContainer = styled(WordBox)`
+  border-color: cornflowerblue;
+  background-color: lightblue;
+  //display: inline-flex;
+  color: black;
+  display: inline-table;
+  width: 300px;
+  overflow: auto;
+  font-size: 14pt;
+`;
 const NumberBox = styled(WordBox)`
   border-color: cornflowerblue;
   background-color: lightblue;
-  display: inline-flex;
+  display: inline-table;
   color: black;
+  cursor: pointer;
+  padding: 20px;
+  font-size: 14pt;
+  margin: 5px;
+  
 `;
 
 const TopNumberBox = styled(NumberBox)`
@@ -235,4 +287,17 @@ const starDisplay = (starCount: number) => {
     if (i%5 === 4) displayString += ' ';
   }
   return displayString; // + (starCount > 20 ? ` ...${starCount}` : '');
+}
+
+const generateRandomSequenceUpTo = (num: number): number[] => {
+  const usedNumberSet = new Set();
+  const sequenceArray = [];
+  for(let i = 0;usedNumberSet.size < num && i < 100;i++) {
+    const randomNumber = Math.floor(Math.random() * num);
+    if (!usedNumberSet.has(randomNumber)) {
+      sequenceArray.push(randomNumber+1);
+      usedNumberSet.add(randomNumber);
+    }
+  }
+  return sequenceArray;
 }

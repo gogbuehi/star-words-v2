@@ -40,10 +40,11 @@ const NumTable = styled.table`
 `
 const NumCell = styled.td`
   width: 50px;
-  padding: 5px;
+  padding: 20px;
   background-color: lightblue;
   color: black;
   border: solid 3px;
   border-radius: 5px;
   margin: 10px;
+  font-size: large;
 `;
