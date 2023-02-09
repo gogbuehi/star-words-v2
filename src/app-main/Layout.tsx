@@ -13,6 +13,9 @@ const Layout = () => {
             <Link to="/timestable">Times Table</Link>
           </TopMenuItem>
           <TopMenuItem>
+            <Link to="/division">Division</Link>
+          </TopMenuItem>
+          <TopMenuItem>
             <Link to="/giraffe">Giraffe, Pelly, & Me</Link>
           </TopMenuItem>
           {/*<TopMenuItem>*/}

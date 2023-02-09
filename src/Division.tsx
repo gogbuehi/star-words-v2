@@ -1,22 +1,22 @@
 import PracticeMaths from "./app-main/PracticeMaths";
 import {CenterContent} from "./app-main/TrickyWords";
 
-function Maths() {
+function Division() {
   return (
     <div className="App">
       <header className="App-header">
         <CenterContent>
-          <h1>Star Maths</h1>
+          <h1>Star Division</h1>
         </CenterContent>
 
       </header>
       <div>
         <PracticeMaths
-          doDivision={false}
+          doDivision={true}
         />
       </div>
     </div>
   )
 }
 
-export default Maths;
+export default Division;

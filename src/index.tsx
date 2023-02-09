@@ -9,6 +9,7 @@ import {HomePage} from "./app-main/HomePage";
 import {TrickyWords} from "./app-main/TrickyWords";
 import {NotFound} from "./app-main/NotFound";
 import {Giraffe} from "./Giraffe";
+import Division from "./Division";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -21,6 +22,7 @@ root.render(
         <Route path="words" element={<TrickyWords />} />
         <Route path="timestable" element={<Maths />} />
         <Route path="giraffe" element={<Giraffe />} />
+        <Route path="division" element={<Division />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

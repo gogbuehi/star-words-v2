@@ -12,7 +12,12 @@ const checkAnswer = (submittedAnswer: string, correctAnswer: number): boolean =>
   const parsedAnswer = `${numericAnswer}`;
   return (parsedAnswer === submittedAnswer) && (numericAnswer === correctAnswer);
 }
-const PracticeMaths = () => {
+
+type MathsProps = {
+  doDivision: boolean;
+}
+const PracticeMaths = (props: MathsProps) => {
+  const {doDivision} = props;
 
   const [firstNumber, setFirstNumber] = useState(1);
   const [secondNumber, setSecondNumber] = useState(2);
@@ -80,7 +85,9 @@ const PracticeMaths = () => {
     {offset && (level < 3)? <TimesTable offset={offset}/> : ''}
     <CenterContent>
       <CenterContent>
-        <ProblemBox>{firstNumber} X {secondNumber} = ?</ProblemBox>
+        {doDivision ?
+        <ProblemBox>{textToMatch} ÷ {firstNumber} = ?</ProblemBox>
+          : <ProblemBox>{firstNumber} x {secondNumber} = ?</ProblemBox>}
         <StatsBox><Timer
           timeInSeconds={timeLeft}
           problemNumber={problemNumber}
@@ -119,12 +126,13 @@ const PracticeMaths = () => {
         <div>Answer</div>
         <TypingInput
         borderColor={isCorrect ? 'green' : 'red'}
-        textToMatch={textToMatch}
+        textToMatch={doDivision ? `${secondNumber}` : textToMatch}
         answerText={answerText}
         submitAnswerCallback={(value) =>  {
           setAnswerText(value);
           setAttemptedCount(attemptedCount+1);
-          if (checkAnswer(value, (firstNumber * secondNumber))) {
+          console.log({doDivision, value, secondNumber})
+          if (checkAnswer(value, doDivision ? secondNumber : (firstNumber*secondNumber))) {
             console.log("CORRECT", endTime - (new Date().getTime()));
 
             setIsCorrect(true);
@@ -153,7 +161,7 @@ const PracticeMaths = () => {
                 }
                 // submit answer
                 setAttemptedCount(attemptedCount+1);
-                if (checkAnswer(answerText, (firstNumber * secondNumber))) {
+                if (checkAnswer(answerText, doDivision ? secondNumber : (firstNumber*secondNumber))) {
                   const timeToSolve = timeLeft - Math.floor((endTime - (new Date().getTime()))/1000);
                   setLastTime(timeToSolve);
                   if (attemptedCount === 0) {
