@@ -7,7 +7,7 @@ interface ITimesTableProps  {
 }
 export const TimesTable = (props: ITimesTableProps) => {
   const [algorithmNum, setAlgorithmNum] = useState('100');
-  const TABLE_SIZE = 20;
+  const TABLE_SIZE = 15;
   const {offset} = props;
   const clickOnTable = (multiplier: number, i: number) => {
     setAlgorithmNum(`${multiplier}-${i}`);
@@ -58,7 +58,7 @@ const generateTimesRow = (timesRowArg: TimesRowArgs) => {
   for(let i = 1; i < (size+1); i++) {
     tableCell.push(generateTimesCell(algorithmNum, multiplier + offset, i, clickCallback) );
   }
-  return (<tr key={`row-${multiplier}`}>{tableCell}</tr>);
+  return (<TTRow key={`row-${multiplier}`}>{tableCell}</TTRow>);
 }
 
 const generateTimesCell = (algorithmNum: string, multiplier: number, i: number, clickCallback: (multiplier: number, i: number) => void) => {
@@ -98,9 +98,18 @@ const CellA = styled.td`
   padding: 5px;
   text-align: center;
   font-size: 20pt;
+  border-radius: 5px;
+  width: 50px;
+  height: 50px;
+  border-top: solid 1px white;
+  border-right: solid 1px white;
 `;
 
 const CellB = styled(CellA)`
   background-color: black;
   color: white;
+`;
+
+const TTRow = styled.tr`
+  border: solid 1px white;
 `;
