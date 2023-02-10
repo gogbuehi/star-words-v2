@@ -38,7 +38,7 @@ const PracticeMaths = (props: MathsProps) => {
   const [sequence, setSequence] = useState(generateRandomSequenceUpTo(MAX_SEQUENCE));
   // const [averageTime, setAverageTime] = useState(-1);
 
-  const offset = fixedNumber > 0 ? fixedNumber - 1 : 0;
+  const offset = fixedNumber > -1 ? fixedNumber - 1 : 0;
 
   const setProblem = (actualFixedNumber: number, sequenceNumber: number, level: number) =>  () => {
     const {firstNumber, secondNumber} = timesTableNumbers();
@@ -82,7 +82,7 @@ const PracticeMaths = (props: MathsProps) => {
     setProblem(actualFixedNumber, 0, level)();
   }
   return <CenterContent>
-    {offset && (level < 3)? <TimesTable offset={offset}/> : ''}
+    {offset > -1 && (level < 3)? <TimesTable offset={offset}/> : ''}
     <CenterContent>
       <CenterContent>
         {doDivision ?

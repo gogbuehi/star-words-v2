@@ -8,7 +8,7 @@ interface ITimesTableProps  {
 export const TimesTable = (props: ITimesTableProps) => {
   const [algorithmNum, setAlgorithmNum] = useState('100');
   const TABLE_SIZE = 15;
-  const {offset} = props;
+  const {offset=-1} = props;
   const clickOnTable = (multiplier: number, i: number) => {
     setAlgorithmNum(`${multiplier}-${i}`);
   }
@@ -31,7 +31,7 @@ type TimesTableArgs = {
 }
 const generateTimesTable = (timesTableArgs: TimesTableArgs) => {
   const {algorithmNum, size, offset, clickCallback} = timesTableArgs;
-  const rows = offset ? 1 : size;
+  const rows = offset !== -1 ? 1 : size;
   const tableRows = [];
   for(let i = 1; i < rows+1; i++) {
     tableRows.push(generateTimesRow({algorithmNum, size, offset, multiplier: i, clickCallback}));
