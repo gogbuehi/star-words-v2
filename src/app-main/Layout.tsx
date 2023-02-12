@@ -13,6 +13,9 @@ const Layout = () => {
             <Link to="/addition">Addition</Link>
           </TopMenuItem>
           <TopMenuItem>
+            <Link to="/subtraction">Subtraction</Link>
+          </TopMenuItem>
+          <TopMenuItem>
             <Link to="/multiplication">Multiplication</Link>
           </TopMenuItem>
           <TopMenuItem>

@@ -26,7 +26,7 @@ const PracticeMaths = (props: MathsProps) => {
     problemOperatorFunction = (firstNumber: number, secondNumber: number): number => {
       return firstNumber + secondNumber;
     };
-    problemOperatorString = '+';
+    problemOperatorString = doDivision ? '-' : '+';
   } else {
     problemOperatorFunction = (firstNumber: number, secondNumber: number): number => {
       return firstNumber * secondNumber;
@@ -97,7 +97,7 @@ const PracticeMaths = (props: MathsProps) => {
     setProblem(actualFixedNumber, 0, level)();
   }
   return <CenterContent>
-    {offset > 0 && (level < 3)? <TimesTable offset={offset}/> : ''}
+    {!doAddition && offset > 0 && (level < 3)? <TimesTable offset={offset}/> : ''}
     <CenterContent>
       <CenterContent>
         <ProblemBox>{doDivision ? textToMatch : firstNumber} {problemOperatorString} {doDivision ? firstNumber : secondNumber} = ?</ProblemBox>

@@ -11,6 +11,7 @@ import {NotFound} from "./app-main/NotFound";
 import {Giraffe} from "./Giraffe";
 import Division from "./Division";
 import Addition from "./Addition";
+import Subtraction from "./Subtraction";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -25,6 +26,7 @@ root.render(
         <Route path="multiplication" element={<Maths />} />
         <Route path="giraffe" element={<Giraffe />} />
         <Route path="division" element={<Division />} />
+        <Route path="subtraction" element={<Subtraction />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
