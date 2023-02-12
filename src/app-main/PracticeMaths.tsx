@@ -7,6 +7,7 @@ import {Timer} from "./components/Timer";
 import {TimesTable} from "../TimesTable";
 const MAX_SEQUENCE = 12;
 const checkAnswer = (submittedAnswer: string, correctAnswer: number): boolean => {
+  console.log('checkAnswer', submittedAnswer, correctAnswer);
   const numericAnswer = parseInt(submittedAnswer);
   // Validate as a number
   const parsedAnswer = `${numericAnswer}`;
@@ -15,14 +16,28 @@ const checkAnswer = (submittedAnswer: string, correctAnswer: number): boolean =>
 
 type MathsProps = {
   doDivision: boolean;
+  doAddition: boolean;
 }
 const PracticeMaths = (props: MathsProps) => {
-  const {doDivision} = props;
+  const {doDivision, doAddition} = props;
+  let problemOperatorString;
+  let problemOperatorFunction: (firstNumber: number, secondNumber: number) => number;
+  if (doAddition) {
+    problemOperatorFunction = (firstNumber: number, secondNumber: number): number => {
+      return firstNumber + secondNumber;
+    };
+    problemOperatorString = '+';
+  } else {
+    problemOperatorFunction = (firstNumber: number, secondNumber: number): number => {
+      return firstNumber * secondNumber;
+    }
+    problemOperatorString = doDivision ? '÷' : 'x';
+  }
 
   const [firstNumber, setFirstNumber] = useState(1);
   const [secondNumber, setSecondNumber] = useState(2);
   const [isCorrect, setIsCorrect] = useState(false);
-  const [textToMatch, setTextToMatch] = useState(`${firstNumber * secondNumber}`);
+  const [textToMatch, setTextToMatch] = useState(`${problemOperatorFunction(firstNumber, secondNumber)}`);
   const [answerText, setAnswerText] = useState('');
   const [fixedNumber, setFixedNumber] = useState(-1);
   const [sequenceNumber, setSequenceNumber] = useState(0);
@@ -68,7 +83,7 @@ const PracticeMaths = (props: MathsProps) => {
     }
     setFirstNumber(actual1stNumber);
     setSecondNumber(actual2ndNumber);
-    setTextToMatch(`${actual1stNumber * actual2ndNumber}`);
+    setTextToMatch(`${problemOperatorFunction(actual1stNumber, actual2ndNumber)}`);
     setAnswerText('');
     setTimeLeft(30);
     setProblemNumber(problemNumber+1);
@@ -82,12 +97,10 @@ const PracticeMaths = (props: MathsProps) => {
     setProblem(actualFixedNumber, 0, level)();
   }
   return <CenterContent>
-    {offset > -1 && (level < 3)? <TimesTable offset={offset}/> : ''}
+    {offset > 0 && (level < 3)? <TimesTable offset={offset}/> : ''}
     <CenterContent>
       <CenterContent>
-        {doDivision ?
-        <ProblemBox>{textToMatch} ÷ {firstNumber} = ?</ProblemBox>
-          : <ProblemBox>{firstNumber} x {secondNumber} = ?</ProblemBox>}
+        <ProblemBox>{doDivision ? textToMatch : firstNumber} {problemOperatorString} {doDivision ? firstNumber : secondNumber} = ?</ProblemBox>
         <StatsBox><Timer
           timeInSeconds={timeLeft}
           problemNumber={problemNumber}
@@ -132,7 +145,7 @@ const PracticeMaths = (props: MathsProps) => {
           setAnswerText(value);
           setAttemptedCount(attemptedCount+1);
           console.log({doDivision, value, secondNumber})
-          if (checkAnswer(value, doDivision ? secondNumber : (firstNumber*secondNumber))) {
+          if (checkAnswer(value, doDivision ? secondNumber : problemOperatorFunction(firstNumber, secondNumber))) {
             console.log("CORRECT", endTime - (new Date().getTime()));
 
             setIsCorrect(true);
@@ -161,7 +174,7 @@ const PracticeMaths = (props: MathsProps) => {
                 }
                 // submit answer
                 setAttemptedCount(attemptedCount+1);
-                if (checkAnswer(answerText, doDivision ? secondNumber : (firstNumber*secondNumber))) {
+                if (checkAnswer(answerText, doDivision ? secondNumber : (problemOperatorFunction(firstNumber,secondNumber) ))) { //setTextToMatch(`${problemOperatorFunction(actual1stNumber, actual2ndNumber)}`);
                   const timeToSolve = timeLeft - Math.floor((endTime - (new Date().getTime()))/1000);
                   setLastTime(timeToSolve);
                   if (attemptedCount === 0) {

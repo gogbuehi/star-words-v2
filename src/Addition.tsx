@@ -1,7 +1,7 @@
 import PracticeMaths from "./app-main/PracticeMaths";
 import {CenterContent} from "./app-main/TrickyWords";
 
-function Division() {
+function Addition() {
   return (
     <div className="App">
       <header className="App-header">
@@ -12,12 +12,12 @@ function Division() {
       </header>
       <div>
         <PracticeMaths
-          doDivision={true}
-          doAddition={false}
+          doDivision={false}
+          doAddition={true}
         />
       </div>
     </div>
   )
 }
 
-export default Division;
+export default Addition;

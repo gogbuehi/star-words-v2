@@ -13,6 +13,7 @@ function Maths() {
       <div>
         <PracticeMaths
           doDivision={false}
+          doAddition={false}
         />
       </div>
     </div>

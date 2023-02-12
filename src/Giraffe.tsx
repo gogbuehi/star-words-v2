@@ -1,4 +1,3 @@
-import {CenterContent, WordBox} from "./app-main/TrickyWords";
 import styled from "styled-components";
 import {useState} from "react";
 
@@ -30,22 +29,44 @@ export const Giraffe =  () => {
     }
     setParagraph((paragraph+1)%currentLines.length);
   }
-  return (<CenterContent>
+  return (<ParagraphBox>
     <h1>Giraffe</h1>
-    {currentLines.map((text, index) => {
+    <div>
+      {currentLines.map((text, index) => {
 
-      const ElementToUse = index === paragraph ? CurrentBookText : index < paragraph ? PreviousBookText : NextBookText;
-      return <ElementToUse
-        key={`line-${index}`}
-        onClick={paragraphClick}
-      >{text}</ElementToUse>
-    })}
-  </CenterContent>);
+        const ElementToUse = index === paragraph ? CurrentBookText : index < paragraph ? PreviousBookText : NextBookText;
+        return <ElementToUse
+          key={`line-${index}`}
+          onClick={paragraphClick}
+        >{textToWordBoxes(text)}</ElementToUse>
+      })}
+    </div>
+
+  </ParagraphBox>);
 }
-
-
-const BookText = styled(WordBox)`
+const ParagraphBox = styled.div`
+  vertical-align: text-top;
+  width: 100%;
+  padding: 10px;
+`;
+const StoryBox = styled.div`
+  border: solid 1px yellow;
+  border-radius: 30px;
+  padding: 30px;
+  margin: 10px;
   text-align: justify;
+  vertical-align: top;
+  color: #e0d080;
+  background-color: #302000;
+  font-weight: bold;
+  font-size: 16pt;
+  width: 20%;
+  height: 200px;
+  display: inline-block;
+  overflow: scroll;
+`;
+const BookText = styled(StoryBox)`
+  
 `;
 
 const CurrentBookText = styled(BookText)`
@@ -53,16 +74,23 @@ const CurrentBookText = styled(BookText)`
 `;
 
 const NextBookText = styled(BookText)`
-  padding: 10px;
   font-size: xx-small;
 `;
 
 const PreviousBookText = styled(BookText)`
   background-color: #202020;
   font-size: xx-small;
-  border-width: 1px;
-  border-style: dotted;
-  padding: 15px;
+`;
+
+const WordBox = styled.span`
+  display:inline-grid;
+  margin: 0px;
+  
+  padding: 3px 20px 3px 3px;
+  border-bottom: dotted 1px #A8AcA4;
+  border-left: dotted 1px #A8AcA4;
+  border-radius: 5px;
+  width: fit-content;
 `;
 
 const CH1_P1 = [
@@ -89,4 +117,10 @@ const BOOK_MAP: Map<string, string[]> = new Map([
   ['CH1_P2', CH1_P2],
   ['CH1_P3', CH1_P3]
 ]);
+
+const textToWordBoxes = (text:string) => {
+  return text.split(/\s/).map((word, index) => {
+    return (<WordBox key={`wb-${index}`}>{word}</WordBox>);
+  })
+}
 
