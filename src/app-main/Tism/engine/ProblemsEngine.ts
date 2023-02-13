@@ -64,11 +64,11 @@ const calculate = (firstNumber:number, secondNumber:number, operator: string): n
     case '+':
       return firstNumber + secondNumber;
     case '-':
-      return firstNumber - secondNumber;
+      return firstNumber + secondNumber;
     case 'x':
       return firstNumber * secondNumber;
     case '÷':
-      return firstNumber / secondNumber;
+      return firstNumber * secondNumber;
     default:
       throw new Error('Invalid Operator');
   }
