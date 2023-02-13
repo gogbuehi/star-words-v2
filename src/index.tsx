@@ -12,6 +12,7 @@ import {Giraffe} from "./Giraffe";
 import Division from "./Division";
 import Addition from "./Addition";
 import Subtraction from "./Subtraction";
+import MathDevice from "./app-main/Tism/MathDevice";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -27,6 +28,7 @@ root.render(
         <Route path="giraffe" element={<Giraffe />} />
         <Route path="division" element={<Division />} />
         <Route path="subtraction" element={<Subtraction />} />
+        <Route path="math" element={<MathDevice />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
