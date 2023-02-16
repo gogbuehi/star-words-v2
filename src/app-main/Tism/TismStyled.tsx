@@ -54,6 +54,22 @@ export const OutputBox = styled(MathBox)`
   width: 30%;
 `;
 
+export const TryAgainOutputBox = styled(OutputBox)`
+  border-color: red;
+  background-color: #200000;
+`;
+
+export const OutputEntry = styled.div`
+  background-color: black;
+  color: greenyellow;
+  border-bottom: dotted 1px #303030;
+`;
+
+export const OutputEntryPast = styled(OutputEntry)`
+  color: #7DcF00;
+  font-size: x-small;
+`;
+
 export const  TimerBox = styled.div`
   position: absolute;
   right: 50px;

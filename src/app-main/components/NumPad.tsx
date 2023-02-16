@@ -28,7 +28,7 @@ export const NumPad = (propsRecieved: NumPadProps) => {
     <tr>
       <NumCell onClick={clickMethod('-')}>&lt;</NumCell>
       <NumCell onClick={clickMethod('0')}>0</NumCell>
-      <NumCell onClick={clickMethod('')}>x</NumCell>
+      <NumCell onClick={clickMethod('')}>GO</NumCell>
     </tr>
     </tbody>
   </NumTable>)

@@ -24,9 +24,9 @@ const Layout = () => {
           <TopMenuItem>
             <Link to="/giraffe">Giraffe, Pelly, & Me</Link>
           </TopMenuItem>
-          {/*<TopMenuItem>*/}
-          {/*  <Link to="/math">Math App</Link>*/}
-          {/*</TopMenuItem>*/}
+          <TopMenuItem>
+            <Link to="/math">Math App</Link>
+          </TopMenuItem>
           {/*<TopMenuItem>*/}
           {/*  <Link to="/words">Tricky Words</Link>*/}
           {/*</TopMenuItem>*/}

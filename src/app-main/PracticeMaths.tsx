@@ -201,7 +201,7 @@ const PracticeMaths = (props: MathsProps) => {
 
 export default PracticeMaths;
 
-const timesTableNumbers = () => {
+export const timesTableNumbers = () => {
   const firstNumber = randomInteger(10);
   const secondNumber = randomInteger(10);
 
@@ -286,7 +286,7 @@ const starDisplay = (starCount: number) => {
   return displayString; // + (starCount > 20 ? ` ...${starCount}` : '');
 }
 
-const generateRandomSequenceUpTo = (num: number): number[] => {
+export const generateRandomSequenceUpTo = (num: number): number[] => {
   const usedNumberSet = new Set();
   const sequenceArray = [];
   for(let i = 0;usedNumberSet.size < num && i < 100;i++) {
