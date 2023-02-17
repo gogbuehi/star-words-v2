@@ -3,7 +3,7 @@ import {
   DeviceContainer,
   DeviceHeading, FixedNumberBox,
   LeftBox, LevelBox,
-  MathBox,
+  MathBox, MathBoxButton,
   OutputBox, OutputEntry, OutputEntryPast,
   OutputSection, SelectedMathBox,
   SpeakerBox,
@@ -15,6 +15,7 @@ import FractionCircle from "./components/FractionCircle";
 import {ProblemsEngine} from "./engine/ProblemsEngine";
 import {generateRandomSequenceUpTo, timesTableNumbers} from "../PracticeMaths";
 import TerminalOutput from "./components/TerminalOutput";
+import {TimesTable} from "../../TimesTable";
 const MAX_SEQUENCE = 12;
 const FRACTION_LABEL = '½,⅓,⅗,...';
 const MathDevice = () => {
@@ -103,7 +104,6 @@ const MathDevice = () => {
     }
     setFirstNumber(actual1stNumber);
     setSecondNumber(actual2ndNumber);
-    console.log("SHOULD ADD LINE");
     const p = new ProblemsEngine({firstNumber:actual1stNumber, secondNumber: actual2ndNumber, operator})
     addLine(p.toString());
     setAnswerText('');
@@ -222,7 +222,7 @@ const MathDevice = () => {
     </OutputSection>
     <LeftBox>
       {['Number', 'Level'].map((operator, index) => {
-        const NumBox = (operator === outputState) ? SelectedMathBox : MathBox;
+        const NumBox = (operator === outputState) ? SelectedMathBox : MathBoxButton;
         return (
           <NumBox key={index}
                   onClick={() => {
@@ -235,11 +235,10 @@ const MathDevice = () => {
           >{operator}</NumBox>)
       })}
       {['+', '-', 'x', '÷', FRACTION_LABEL].map((operator, index) => {
-        const NumBox = (operator === outputState) ? SelectedMathBox : MathBox;
+        const NumBox = (operator === outputState) ? SelectedMathBox : MathBoxButton;
         return (
           <NumBox key={index}
                   onClick={() => {
-                    console.log("did this click");
                     setProblem(fixedNumber, 0, level, operator)();
                     setOperator(operator);
                     setOutputState(operator);
@@ -252,6 +251,7 @@ const MathDevice = () => {
       })}
     </LeftBox>
     <MathBox><NumPad pressCallback={inputCallback} /></MathBox>
+    <MathBox><TimesTable pixels={10} /></MathBox>
     <FractionCircle radius={100} divisions={9} activeIndex={0} />
 
   </DeviceContainer>)

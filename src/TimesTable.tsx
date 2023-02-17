@@ -4,11 +4,12 @@ import {useState} from "react";
 
 interface ITimesTableProps  {
   offset?: number;
+  pixels?: number;
 }
 export const TimesTable = (props: ITimesTableProps) => {
   const [algorithmNum, setAlgorithmNum] = useState('100');
-  const TABLE_SIZE = 15;
-  const {offset} = props;
+  const TABLE_SIZE = 12;
+  const {offset, pixels} = props;
   const clickOnTable = (multiplier: number, i: number) => {
     setAlgorithmNum(`${multiplier}-${i}`);
   }
@@ -17,7 +18,7 @@ export const TimesTable = (props: ITimesTableProps) => {
     <br />
     {generateTimesTable({
       offset,
-      algorithmNum, size: TABLE_SIZE, clickCallback: clickOnTable})}
+      algorithmNum, size: TABLE_SIZE, clickCallback: clickOnTable}, pixels)}
   </CenterContent>)
 
 
@@ -29,7 +30,7 @@ type TimesTableArgs = {
   offset?: number;
   clickCallback: (multiplier: number, i: number) => void;
 }
-const generateTimesTable = (timesTableArgs: TimesTableArgs) => {
+const generateTimesTable = (timesTableArgs: TimesTableArgs, pixels=0) => {
   const {algorithmNum, size, offset, clickCallback} = timesTableArgs;
   const rows = offset ? 1 : size;
   const tableRows = [];
@@ -37,9 +38,9 @@ const generateTimesTable = (timesTableArgs: TimesTableArgs) => {
   //   tableRows.push(generateTimesRow({algorithmNum, size, offset: 0, multiplier: 1, clickCallback}));
   // }
   for(let i = 1; i < rows+1; i++) {
-    tableRows.push(generateTimesRow({algorithmNum, size, offset, multiplier: i, clickCallback}));
+    tableRows.push(generateTimesRow({algorithmNum, size, offset, multiplier: i, clickCallback}, pixels));
   }
-  return (<TableA>
+  return (<TableA size={pixels}>
     <tbody>
     {tableRows}
     </tbody>
@@ -53,20 +54,27 @@ type TimesRowArgs = {
   clickCallback: (multiplier: number, i: number) => void;
   offset?: number;
 }
-const generateTimesRow = (timesRowArg: TimesRowArgs) => {
+const generateTimesRow = (timesRowArg: TimesRowArgs, pixels=0) => {
   const {algorithmNum, size, multiplier, clickCallback} = timesRowArg;
   const offset = timesRowArg.offset || 0;
   const tableCell = [];
 
   for(let i = 1; i < (size+1); i++) {
-    tableCell.push(generateTimesCell(algorithmNum, multiplier + offset, i, clickCallback) );
+    tableCell.push(generateTimesCell({algorithmNum, multiplier: multiplier + offset, i, clickCallback}, pixels) );
   }
   return (<TTRow key={`row-${multiplier}`}>{tableCell}</TTRow>);
 }
-
-const generateTimesCell = (algorithmNum: string, multiplier: number, i: number, clickCallback: (multiplier: number, i: number) => void) => {
+type TimesCellArgs = {
+  algorithmNum: string;
+  i: number;
+  multiplier: number;
+  clickCallback: (multiplier: number, i: number) => void;
+}
+const generateTimesCell = (timesCellArgs: TimesCellArgs, pixels=0) => {
+  // algorithmNum: string, multiplier: number, i: number, clickCallback: (multiplier: number, i: number) => void
+  const {algorithmNum, multiplier, clickCallback, i} = timesCellArgs;
   const CellToUse = determineCellToUse(algorithmNum, multiplier, i);
-  return (<CellToUse key={`${multiplier}-${i}`}
+  return (<CellToUse size={pixels} key={`${multiplier}-${i}`}
   onClick={() => {
   clickCallback(multiplier, i)}
   }
@@ -92,18 +100,22 @@ const determineCellToUse = (algorithmNum: string, multiplier: number, i: number)
 
 }
 
+type CellProps = {
+  size?: number;
+}
+
 const TableA = styled.table`
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: ${(props: CellProps) => (props.size || '50')}px;
+  margin-right: ${(props: CellProps) => (props.size || '50')}px;
   display: inline-block;
 `;
 const CellA = styled.td`
   padding: 5px;
   text-align: center;
-  font-size: 20pt;
+  font-size: 16pt;
   border-radius: 5px;
-  width: 50px;
-  height: 50px;
+  width: ${(props: CellProps) => (props.size || '50')}px;
+  height: ${(props: CellProps) => (props.size || '50')}px;
   border-top: solid 1px white;
   border-right: solid 1px white;
 `;

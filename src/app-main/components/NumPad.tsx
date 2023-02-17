@@ -47,4 +47,5 @@ const NumCell = styled.td`
   border-radius: 5px;
   margin: 10px;
   font-size: large;
+  cursor: pointer;
 `;

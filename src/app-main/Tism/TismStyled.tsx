@@ -32,6 +32,11 @@ export const MathBox = styled.div`
   overflow: scroll;
 `;
 
+export const MathBoxButton = styled(MathBox)`
+  cursor: pointer;
+  border-color: darkslateblue;
+`;
+
 export const SelectedMathBox = styled(MathBox)`
   background-color: #282c34;
   color: #61dafb;
