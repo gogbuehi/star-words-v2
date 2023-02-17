@@ -277,10 +277,23 @@ const AttemptedStatsBox = styled(StatsBox)`
   
 `;
 
-const starDisplay = (starCount: number) => {
+export const starDisplay = (starCount: number) => {
   let displayString = '';
-  for(let i =0; i < starCount && i < 20; i++) {
-    displayString += `*`;
+  const MULTIPLES_OF_GOLD = 100;
+  const MULTIPLES_OF_SIMPLE = 10;
+  const goldStars = Math.floor(starCount / (MULTIPLES_OF_GOLD));
+  const simpleStars = Math.floor((starCount%MULTIPLES_OF_GOLD) / MULTIPLES_OF_SIMPLE);
+  const remainderStars = starCount % MULTIPLES_OF_SIMPLE;
+  for(let i=0; i < goldStars; i++) {
+    displayString += '🌟';
+  }
+  if (displayString) displayString += ' ';
+  for(let i=0; i < simpleStars; i++) {
+    displayString += '⭐';
+  }
+  if (displayString) displayString += ' ';
+  for(let i =0; i < remainderStars; i++) {
+    displayString += `✰`;
     if (i%5 === 4) displayString += ' ';
   }
   return displayString; // + (starCount > 20 ? ` ...${starCount}` : '');

@@ -90,3 +90,9 @@ export const FixedNumberBox = styled(TimerBox)`
   left: 50px;
   right: unset;
 `;
+
+export const CorrectBoxContainer = styled(TimerBox)`
+  right: 50%;
+  max-width: 250px;
+  
+`;

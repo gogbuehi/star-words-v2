@@ -1,5 +1,6 @@
 import {NumPad} from "../components/NumPad";
 import {
+  CorrectBoxContainer,
   DeviceContainer,
   DeviceHeading, FixedNumberBox,
   LeftBox, LevelBox,
@@ -16,6 +17,7 @@ import {ProblemsEngine} from "./engine/ProblemsEngine";
 import {generateRandomSequenceUpTo, timesTableNumbers} from "../PracticeMaths";
 import TerminalOutput from "./components/TerminalOutput";
 import {TimesTable} from "../../TimesTable";
+import CorrectBox from "./components/CorrectBox";
 const MAX_SEQUENCE = 12;
 const FRACTION_LABEL = '½,⅓,⅗,...';
 const MathDevice = () => {
@@ -35,6 +37,8 @@ const MathDevice = () => {
   const [outputLog, setOutputLog] = useState([problem.toString()]);
 
   const [isCorrect, setIsCorrect] = useState(false);
+
+  const [rightCount, setRightCount] = useState(0);
 
   const offset = fixedNumber > -1 ? fixedNumber - 1 : 0;
 
@@ -137,7 +141,7 @@ const MathDevice = () => {
       // }
       // console.log("CORRECT", avgTime, timeToSolve);
       setCorrectState(true);
-      // setRightCount(rightCount +1);
+      setRightCount(rightCount +1);
       addLine(problem.toAnswerString(), true);
       setTimeout(setProblem(fixedNumber, sequenceNumber, level, currentOperator), 1000);
     } else {
@@ -194,7 +198,6 @@ const MathDevice = () => {
       currentOutput = 'Hello';
   }
   const addLine = (line: string, minusLine=false) => {
-    console.log(`adding line: ${line}`);
     setOutputLog((prevLines) => {
       const linesToUse = minusLine ? prevLines.splice(1) : prevLines;
       return [line, ...linesToUse]
@@ -206,6 +209,7 @@ const MathDevice = () => {
     <OutputSection>
       <LevelBox>Level: {level}</LevelBox>
       <FixedNumberBox>#: {fixedNumber===-1 ?'*' : fixedNumber}</FixedNumberBox>
+      <CorrectBoxContainer><CorrectBox rightCount={rightCount} /></CorrectBoxContainer>
       <TimerBox><SimplifiedTimer timeInSeconds={30} problemNumber={1} storeEndTime={(timeLeft:number) => {}} /></TimerBox>
     </OutputSection>
     <OutputSection>
