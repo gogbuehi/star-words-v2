@@ -30,7 +30,7 @@ const FractionCircle = (props: FractionCircleProps) => {
         {Array.from({ length: divisions }, (_, index) => {
           const startAngle = (index * angle * Math.PI) / 180;
           const endAngle = ((index + 1) * angle * Math.PI) / 180;
-          const isIndexActive = index < numerator;
+          const isIndexActive = (divisions + index + Math.floor(divisions/4) + 1)%divisions < numerator;
           const fillColor = isIndexActive ? '#a090f0' : 'transparent';
 
           return (

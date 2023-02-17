@@ -77,3 +77,11 @@ export const  TimerBox = styled.div`
   border-radius: 15px;
   padding: 10px;
 `;
+
+export const LevelBox = styled(TimerBox)`
+  right: 150px;
+`;
+export const FixedNumberBox = styled(TimerBox)`
+  left: 50px;
+  right: unset;
+`;

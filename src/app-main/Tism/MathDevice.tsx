@@ -1,8 +1,8 @@
 import {NumPad} from "../components/NumPad";
 import {
   DeviceContainer,
-  DeviceHeading,
-  LeftBox,
+  DeviceHeading, FixedNumberBox,
+  LeftBox, LevelBox,
   MathBox,
   OutputBox, OutputEntry, OutputEntryPast,
   OutputSection, SelectedMathBox,
@@ -16,6 +16,7 @@ import {ProblemsEngine} from "./engine/ProblemsEngine";
 import {generateRandomSequenceUpTo, timesTableNumbers} from "../PracticeMaths";
 import TerminalOutput from "./components/TerminalOutput";
 const MAX_SEQUENCE = 12;
+const FRACTION_LABEL = '½,⅓,⅗,...';
 const MathDevice = () => {
   const [doDivision, setDoDivision] = useState(false);
   const [doAddition, setDoAddition] = useState(false);
@@ -59,6 +60,20 @@ const MathDevice = () => {
         break;
     }
   }
+
+  const setLevelAndProblems = (level: number, operator: string, fixedNumber=-1) => () => {
+    if (level < 1 || level > 4) return;
+    const fixedNumberString = fixedNumber === -1 ? 'random' : fixedNumber;
+    addLine(`Level set to ${level}; Number set to ${fixedNumberString}`)
+    console.log({level, operator, fixedNumber});
+    setLevel(level);
+    const actualFixedNumber = fixedNumber === -1 ? 2 : fixedNumber;
+    setFixedNumber(actualFixedNumber);
+    setSequenceNumber(0);
+    setOutputState(operator);
+    setProblem(actualFixedNumber, 0, level, operator)();
+  }
+
   const setProblem = (actualFixedNumber: number, sequenceNumber: number, level: number, operator: string) =>  () => {
     console.log(`setting problem... ${actualFixedNumber} ${sequenceNumber} ${level} ${operator}`)
     const {firstNumber, secondNumber} = timesTableNumbers();
@@ -144,10 +159,10 @@ const MathDevice = () => {
             checkTheAnswer(answerText);
             break;
           case 'Number':
-            console.log('Set number...');
+            setLevelAndProblems(level, currentOperator, parseInt(answerText) || -1)();
             break;
           case 'Level':
-            console.log('Set level...');
+            setLevelAndProblems(parseInt(answerText) || 1, currentOperator)();
             break;
           default:
             console.log('I have no idea...');
@@ -176,14 +191,19 @@ const MathDevice = () => {
     default:
       currentOutput = 'Hello';
   }
-  const addLine = (line: string) => {
+  const addLine = (line: string, minusLine=false) => {
     console.log(`adding line: ${line}`);
-    setOutputLog((prevLines) => [line, ...prevLines]);
+    setOutputLog((prevLines) => {
+
+      return [line, ...prevLines]
+    });
   };
   const InputComponent = isCorrect ? OutputBox : TryAgainOutputBox;
   return (<DeviceContainer>
     <DeviceHeading>Math Device</DeviceHeading>
     <OutputSection>
+      <LevelBox>Level: {level}</LevelBox>
+      <FixedNumberBox>#: {fixedNumber===-1 ?'*' : fixedNumber}</FixedNumberBox>
       <TimerBox><SimplifiedTimer timeInSeconds={30} problemNumber={1} storeEndTime={(timeLeft:number) => {}} /></TimerBox>
     </OutputSection>
     <OutputSection>
@@ -207,19 +227,20 @@ const MathDevice = () => {
           <NumBox key={index}
                   onClick={() => {
                     setOutputState(operator);
+                    addLine(`Enter ${operator} -->`);
                   }
                     // setLevelAndProblems(num, fixedNumber)
                   }
 
           >{operator}</NumBox>)
       })}
-      {['+', '-', 'x', '÷'].map((operator, index) => {
+      {['+', '-', 'x', '÷', FRACTION_LABEL].map((operator, index) => {
         const NumBox = (operator === outputState) ? SelectedMathBox : MathBox;
         return (
           <NumBox key={index}
                   onClick={() => {
                     console.log("did this click");
-                    setProblem(fixedNumber, sequenceNumber, level, operator)();
+                    setProblem(fixedNumber, 0, level, operator)();
                     setOperator(operator);
                     setOutputState(operator);
 
@@ -231,7 +252,7 @@ const MathDevice = () => {
       })}
     </LeftBox>
     <MathBox><NumPad pressCallback={inputCallback} /></MathBox>
-    <FractionCircle radius={100} divisions={18} activeIndex={0} />
+    <FractionCircle radius={100} divisions={9} activeIndex={0} />
 
   </DeviceContainer>)
 }
