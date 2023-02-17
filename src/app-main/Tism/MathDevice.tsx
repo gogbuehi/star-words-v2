@@ -73,7 +73,6 @@ const MathDevice = () => {
     const usableFixedNumber = fixedNumber === -1 ? 2 : fixedNumber;
     const fixedNumberString = usableFixedNumber === -1 ? 'random' : usableFixedNumber;
     addLine(`Level set to ${level}; Number set to ${fixedNumberString}`, true)
-    console.log({level, operator, usableFixedNumber});
     setLevel(level);
     const actualFixedNumber = usableFixedNumber === -1 ? 2 : usableFixedNumber;
     setFixedNumber(actualFixedNumber);
@@ -83,7 +82,6 @@ const MathDevice = () => {
   }
 
   const setProblem = (actualFixedNumber: number, sequenceNumber: number, level: number, operator: string) =>  () => {
-    console.log(`setting problem... ${actualFixedNumber} ${sequenceNumber} ${level} ${operator}`)
     const {firstNumber, secondNumber} = timesTableNumbers();
     let actual1stNumber = firstNumber;
     let actual2ndNumber = secondNumber;
@@ -119,8 +117,8 @@ const MathDevice = () => {
     // setIsCorrect(false);
     // setIsSubmitting(level < 3);
   }
-  const checkTheAnswer = (answerText: string) => {
-    if (isCorrect || answerText === '') {
+  const checkTheAnswer = (problem: ProblemsEngine, answerText: string) => {
+    if (answerText === '') {
       return;
     }
     // submit answer
@@ -150,7 +148,7 @@ const MathDevice = () => {
       setCorrectState(false);
     }
   }
-  const inputCallback = (a:string) => {
+  const inputCallback = (problem: ProblemsEngine) => (a:string) => {
     switch(a) {
       case '-':
         if (answerText.length > 0) {
@@ -163,7 +161,7 @@ const MathDevice = () => {
           case '-':
           case 'x':
           case '÷':
-            checkTheAnswer(answerText);
+            checkTheAnswer(problem, answerText);
             break;
           case 'Number':
             setLevelAndProblems(level, currentOperator, parseInt(answerText) || -1)();
@@ -262,8 +260,8 @@ const MathDevice = () => {
       <InputComponent>&gt; {answerText}</InputComponent>
     </OutputSection>
     <MathBox><FractionCircle radius={100} divisions={9} activeIndex={0} /></MathBox>
-    <MathBox><NumPad pressCallback={inputCallback} /></MathBox>
-    {!doAddition && offset > 0 || (level < 3)?<MathBox> <TimesTable pixels={20} offset={offset}/> </MathBox>: ''}
+    <MathBox><NumPad pressCallback={inputCallback(problem)} /></MathBox>
+    {!doAddition && offset > 0 && (level < 3)?<MathBox> <TimesTable pixels={20} offset={offset}/> </MathBox>: ''}
 
   </DeviceContainer>)
 }
