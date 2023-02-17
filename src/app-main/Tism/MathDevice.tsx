@@ -37,7 +37,7 @@ const MathDevice = () => {
   const [outputLog, setOutputLog] = useState([problem.toString()]);
 
   const [isCorrect, setIsCorrect] = useState(false);
-
+  const [attemptedCount, setAttemptedCount] = useState(0);
   const [rightCount, setRightCount] = useState(0);
 
   const offset = fixedNumber > -1 ? fixedNumber - 1 : 0;
@@ -70,11 +70,12 @@ const MathDevice = () => {
 
   const setLevelAndProblems = (level: number, operator: string, fixedNumber=-1) => () => {
     if (level < 1 || level > 4) return;
-    const fixedNumberString = fixedNumber === -1 ? 'random' : fixedNumber;
+    const usableFixedNumber = fixedNumber === -1 ? 2 : fixedNumber;
+    const fixedNumberString = usableFixedNumber === -1 ? 'random' : usableFixedNumber;
     addLine(`Level set to ${level}; Number set to ${fixedNumberString}`, true)
-    console.log({level, operator, fixedNumber});
+    console.log({level, operator, usableFixedNumber});
     setLevel(level);
-    const actualFixedNumber = fixedNumber === -1 ? 2 : fixedNumber;
+    const actualFixedNumber = usableFixedNumber === -1 ? 2 : usableFixedNumber;
     setFixedNumber(actualFixedNumber);
     setSequenceNumber(0);
     setOutputState(operator);
@@ -119,11 +120,11 @@ const MathDevice = () => {
     // setIsSubmitting(level < 3);
   }
   const checkTheAnswer = (answerText: string) => {
-    // if (isCorrect || answerText === '') {
-    //   break;
-    // }
+    if (isCorrect || answerText === '') {
+      return;
+    }
     // submit answer
-    // setAttemptedCount(attemptedCount+1);
+    setAttemptedCount(attemptedCount+1);
     if (problem.checkAnswer(answerText)) {
       // const timeToSolve = timeLeft - Math.floor((endTime - (new Date().getTime()))/1000);
       // setLastTime(timeToSolve);
@@ -199,12 +200,15 @@ const MathDevice = () => {
   }
   const addLine = (line: string, minusLine=false) => {
     setOutputLog((prevLines) => {
-      const minusAnyway = prevLines[0] && (prevLines[0].charAt(prevLines[0].length-1) === '?' || line.charAt(line.length-1) === '?');
-      const linesToUse = minusLine || minusAnyway ? prevLines.splice(1) : prevLines;
+      const lastLine = prevLines[0] || '';
+      const minusAnyway = matchLastCharacter(lastLine, '?') || matchLastCharacter(lastLine, '>');
+      // const minusAnyway = prevLines[0] && (prevLines[0].charAt(prevLines[0].length-1) === '?' || line.charAt(line.length-1) === '?');
+      const linesToUse = minusAnyway ? prevLines.splice(1) : prevLines;
       return [line, ...linesToUse]
     });
   };
-  const InputComponent = isCorrect ? OutputBox : TryAgainOutputBox;
+  const showCorrect = (level < 3) ? !!answerText && problem.checkAnswer(answerText) : isCorrect;
+  const InputComponent = showCorrect ? OutputBox : TryAgainOutputBox;
   return (<DeviceContainer>
     {/*<DeviceHeading>Math Device</DeviceHeading>*/}
     <OutputSection>
@@ -265,3 +269,7 @@ const MathDevice = () => {
 }
 
 export default MathDevice;
+
+const matchLastCharacter = (text:string, matchChar: string): boolean => {
+  return text.charAt(text.length-1) === matchChar;
+}
