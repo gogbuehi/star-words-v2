@@ -64,7 +64,7 @@ const MathDevice = () => {
   const setLevelAndProblems = (level: number, operator: string, fixedNumber=-1) => () => {
     if (level < 1 || level > 4) return;
     const fixedNumberString = fixedNumber === -1 ? 'random' : fixedNumber;
-    addLine(`Level set to ${level}; Number set to ${fixedNumberString}`)
+    addLine(`Level set to ${level}; Number set to ${fixedNumberString}`, true)
     console.log({level, operator, fixedNumber});
     setLevel(level);
     const actualFixedNumber = fixedNumber === -1 ? 2 : fixedNumber;
@@ -136,7 +136,7 @@ const MathDevice = () => {
       // console.log("CORRECT", avgTime, timeToSolve);
       setCorrectState(true);
       // setRightCount(rightCount +1);
-      addLine(problem.toAnswerString());
+      addLine(problem.toAnswerString(), true);
       setTimeout(setProblem(fixedNumber, sequenceNumber, level, currentOperator), 1000);
     } else {
       console.log(`INCORRECT: ${answerText}`);
@@ -194,8 +194,8 @@ const MathDevice = () => {
   const addLine = (line: string, minusLine=false) => {
     console.log(`adding line: ${line}`);
     setOutputLog((prevLines) => {
-
-      return [line, ...prevLines]
+      const linesToUse = minusLine ? prevLines.splice(1) : prevLines;
+      return [line, ...linesToUse]
     });
   };
   const InputComponent = isCorrect ? OutputBox : TryAgainOutputBox;
@@ -227,7 +227,7 @@ const MathDevice = () => {
           <NumBox key={index}
                   onClick={() => {
                     setOutputState(operator);
-                    addLine(`Enter ${operator} -->`);
+                    addLine(`Enter ${operator} -->`, true);
                   }
                     // setLevelAndProblems(num, fixedNumber)
                   }
