@@ -7,7 +7,7 @@ const Layout = () => {
       <nav>
         <ul>
           <TopMenuItem>
-            <Link to="/">Times Table</Link>
+            <Link to="/">Maths Time</Link>
           </TopMenuItem>
           {/*<TopMenuItem>*/}
           {/*  <Link to="/addition">Addition</Link>*/}

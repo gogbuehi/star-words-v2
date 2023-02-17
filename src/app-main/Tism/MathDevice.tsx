@@ -261,7 +261,7 @@ const MathDevice = () => {
     </OutputSection>
     <MathBox><FractionCircle radius={100} divisions={9} activeIndex={0} /></MathBox>
     <MathBox><NumPad pressCallback={inputCallback(problem)} /></MathBox>
-    {!doAddition && offset > 0 && (level < 3)?<MathBox> <TimesTable pixels={20} offset={offset}/> </MathBox>: ''}
+    {!doAddition  && (level < 3)?<MathBox> <TimesTable pixels={20} offset={offset}/> </MathBox>: ''}
 
   </DeviceContainer>)
 }
