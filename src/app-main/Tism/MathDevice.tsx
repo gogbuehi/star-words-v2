@@ -36,6 +36,8 @@ const MathDevice = () => {
 
   const [isCorrect, setIsCorrect] = useState(false);
 
+  const offset = fixedNumber > -1 ? fixedNumber - 1 : 0;
+
   const setCorrectState = (isCorrect: boolean) => {
     // setIsSubmitting(true);
     setIsCorrect(isCorrect);
@@ -251,7 +253,7 @@ const MathDevice = () => {
       })}
     </LeftBox>
     <MathBox><NumPad pressCallback={inputCallback} /></MathBox>
-    <MathBox><TimesTable pixels={10} /></MathBox>
+    {!doAddition && offset > 0 || (level < 3)?<MathBox> <TimesTable pixels={10} offset={offset}/> </MathBox>: ''}
     <FractionCircle radius={100} divisions={9} activeIndex={0} />
 
   </DeviceContainer>)
