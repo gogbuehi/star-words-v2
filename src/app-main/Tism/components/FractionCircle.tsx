@@ -52,5 +52,4 @@ export default FractionCircle;
 
 const FractionCircleContainer = styled.div`
   padding: 5px;
-  border: solid 1px green;
 `;

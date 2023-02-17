@@ -11,14 +11,14 @@ export const TimesTable = (props: ITimesTableProps) => {
   const TABLE_SIZE = 12;
   const {offset, pixels} = props;
   const clickOnTable = (multiplier: number, i: number) => {
-    setAlgorithmNum(`${multiplier}-${i}`);
+    setAlgorithmNum(algorithmNum === '100' ? `${multiplier}-${i}` : '100');
   }
   return (<CenterContent>
-    <button onClick={() => {setAlgorithmNum('100')}}>RESET</button>
-    <br />
     {generateTimesTable({
       offset,
       algorithmNum, size: TABLE_SIZE, clickCallback: clickOnTable}, pixels)}
+    {/*<br />*/}
+    {/*<button onClick={() => {setAlgorithmNum('100')}}>RESET</button>*/}
   </CenterContent>)
 
 
@@ -110,14 +110,17 @@ const TableA = styled.table`
   display: inline-block;
 `;
 const CellA = styled.td`
-  padding: 5px;
+  padding: 2px;
   text-align: center;
-  font-size: 16pt;
+  font-size: 8pt;
   border-radius: 5px;
   width: ${(props: CellProps) => (props.size || '50')}px;
   height: ${(props: CellProps) => (props.size || '50')}px;
-  border-top: solid 1px white;
-  border-right: solid 1px white;
+  border-top: solid 1px #8080e0;
+  border-right: solid 1px #8080e0;
+  background-color: #e0a0a0;
+  color: black;
+  cursor: pointer;
 `;
 
 const CellB = styled(CellA)`

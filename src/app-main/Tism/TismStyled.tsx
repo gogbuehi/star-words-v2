@@ -7,13 +7,15 @@ export const DeviceContainer = styled.div`
   padding: 20px;
 `;
 
-export const DeviceHeading = styled.h1`
+export const DeviceHeading = styled.h2`
   text-align: center;
+  margin-top: 0px;
+  padding: 0px;
+  line-height: normal;
 `;
 export const OutputSection = styled.div`
   background-color: #282c34;
   padding: 20px;
-  width: auto;
 `;
 
 export const MathBox = styled.div`
@@ -35,9 +37,10 @@ export const MathBox = styled.div`
 export const MathBoxButton = styled(MathBox)`
   cursor: pointer;
   border-color: darkslateblue;
+  padding: 20px;
 `;
 
-export const SelectedMathBox = styled(MathBox)`
+export const SelectedMathBox = styled(MathBoxButton)`
   background-color: #282c34;
   color: #61dafb;
 `;

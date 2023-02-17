@@ -1,4 +1,4 @@
-import React from "react";
+import {Fragment} from "react";
 import {starDisplay} from "../../PracticeMaths";
 
 type CorrectBoxProps = {
@@ -8,7 +8,7 @@ const CorrectBox = (props: CorrectBoxProps) => {
   // const [attemptedCount, setAttemptedCount] = useState(0);
   // const [rightCount, setRightCount] = useState(0);
   const {rightCount} = props;
-  return <React.Fragment>{starDisplay(rightCount)}</React.Fragment>
+  return <Fragment>{starDisplay(rightCount)}</Fragment>
 }
 
 export default CorrectBox;

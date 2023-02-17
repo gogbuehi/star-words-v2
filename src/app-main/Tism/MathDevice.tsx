@@ -205,15 +205,45 @@ const MathDevice = () => {
   };
   const InputComponent = isCorrect ? OutputBox : TryAgainOutputBox;
   return (<DeviceContainer>
-    <DeviceHeading>Math Device</DeviceHeading>
+    {/*<DeviceHeading>Math Device</DeviceHeading>*/}
     <OutputSection>
       <LevelBox>Level: {level}</LevelBox>
-      <FixedNumberBox>#: {fixedNumber===-1 ?'*' : fixedNumber}</FixedNumberBox>
+      <FixedNumberBox>#: {fixedNumber===-1 ?'Random' : fixedNumber}</FixedNumberBox>
       <CorrectBoxContainer><CorrectBox rightCount={rightCount} /></CorrectBoxContainer>
       <TimerBox><SimplifiedTimer timeInSeconds={30} problemNumber={1} storeEndTime={(timeLeft:number) => {}} /></TimerBox>
     </OutputSection>
     <OutputSection>
-      <SpeakerBox>Speaker</SpeakerBox>
+      {/*<SpeakerBox>Speaker</SpeakerBox>*/}
+      <LeftBox>
+        {['Number', 'Level'].map((operator, index) => {
+          const NumBox = (operator === outputState) ? SelectedMathBox : MathBoxButton;
+          return (
+            <NumBox key={index}
+                    onClick={() => {
+                      setOutputState(operator);
+                      addLine(`Enter ${operator} -->`, true);
+                    }
+                      // setLevelAndProblems(num, fixedNumber)
+                    }
+
+            >{operator}</NumBox>)
+        })}
+        {['+', '-', 'x', '÷', FRACTION_LABEL].map((operator, index) => {
+          const NumBox = (operator === outputState) ? SelectedMathBox : MathBoxButton;
+          return (
+            <NumBox key={index}
+                    onClick={() => {
+                      setProblem(fixedNumber, 0, level, operator)();
+                      setOperator(operator);
+                      setOutputState(operator);
+
+                    }
+                      // setLevelAndProblems(num, fixedNumber)
+                    }
+
+            >{operator}</NumBox>)
+        })}
+      </LeftBox>
       <OutputBox>
       <TerminalOutput lines={outputLog} />
       </OutputBox>
@@ -226,39 +256,9 @@ const MathDevice = () => {
       {/*</OutputBox>*/}
       <InputComponent>&gt; {answerText}</InputComponent>
     </OutputSection>
-    <LeftBox>
-      {['Number', 'Level'].map((operator, index) => {
-        const NumBox = (operator === outputState) ? SelectedMathBox : MathBoxButton;
-        return (
-          <NumBox key={index}
-                  onClick={() => {
-                    setOutputState(operator);
-                    addLine(`Enter ${operator} -->`, true);
-                  }
-                    // setLevelAndProblems(num, fixedNumber)
-                  }
-
-          >{operator}</NumBox>)
-      })}
-      {['+', '-', 'x', '÷', FRACTION_LABEL].map((operator, index) => {
-        const NumBox = (operator === outputState) ? SelectedMathBox : MathBoxButton;
-        return (
-          <NumBox key={index}
-                  onClick={() => {
-                    setProblem(fixedNumber, 0, level, operator)();
-                    setOperator(operator);
-                    setOutputState(operator);
-
-                  }
-                    // setLevelAndProblems(num, fixedNumber)
-                  }
-
-          >{operator}</NumBox>)
-      })}
-    </LeftBox>
+    <MathBox><FractionCircle radius={100} divisions={9} activeIndex={0} /></MathBox>
     <MathBox><NumPad pressCallback={inputCallback} /></MathBox>
-    {!doAddition && offset > 0 || (level < 3)?<MathBox> <TimesTable pixels={10} offset={offset}/> </MathBox>: ''}
-    <FractionCircle radius={100} divisions={9} activeIndex={0} />
+    {!doAddition && offset > 0 || (level < 3)?<MathBox> <TimesTable pixels={20} offset={offset}/> </MathBox>: ''}
 
   </DeviceContainer>)
 }
