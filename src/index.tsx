@@ -21,7 +21,7 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<HomePage />} />
+        <Route index element={<MathDevice />} />
         <Route path="words" element={<TrickyWords />} />
         <Route path="addition" element={<Addition />} />
         <Route path="multiplication" element={<Maths />} />
