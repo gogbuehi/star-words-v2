@@ -199,7 +199,8 @@ const MathDevice = () => {
   }
   const addLine = (line: string, minusLine=false) => {
     setOutputLog((prevLines) => {
-      const linesToUse = minusLine ? prevLines.splice(1) : prevLines;
+      const minusAnyway = prevLines[0] && (prevLines[0].charAt(prevLines[0].length-1) === '?' || line.charAt(line.length-1) === '?');
+      const linesToUse = minusLine || minusAnyway ? prevLines.splice(1) : prevLines;
       return [line, ...linesToUse]
     });
   };
