@@ -24,6 +24,9 @@ const Layout = () => {
           <TopMenuItem>
             <Link to="/giraffe">Giraffe, Pelly, & Me</Link>
           </TopMenuItem>
+          <TopMenuItem>
+            <Link to="/write">Write</Link>
+          </TopMenuItem>
           {/*<TopMenuItem>*/}
           {/*  <Link to="/math">Math App</Link>*/}
           {/*</TopMenuItem>*/}
