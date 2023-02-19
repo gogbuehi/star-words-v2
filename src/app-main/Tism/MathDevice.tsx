@@ -86,7 +86,7 @@ const MathDevice = () => {
     let actual1stNumber = firstNumber;
     let actual2ndNumber = secondNumber;
     if (actualFixedNumber !== -1) {
-      if (sequenceNumber === MAX_SEQUENCE) {
+      if (sequenceNumber > MAX_SEQUENCE) {
         const nextNumber = (level < 4) ? actualFixedNumber : (actualFixedNumber+1)%(MAX_SEQUENCE+1) || 2;
         setLevelAndProblems(((level+1)%4)||1, operator, nextNumber)();
         return;
