@@ -50,6 +50,15 @@ const MathDevice = () => {
     setIsCorrect(isCorrect);
   }
 
+  const setTextToRead = (numberText: string, textToRead: string) => {
+    if (numberText !== '' && false) {
+      setNumberText(numberText + ' ' + textToRead);
+    } else {
+      setNumberText(textToRead);
+      setNumberTextIndex(0);
+    }
+  }
+
   const setOperator = (operator: string) => {
     switch (operator) {
       case '+':
@@ -75,7 +84,7 @@ const MathDevice = () => {
     if (level < 1 || level > 4) return;
     const usableFixedNumber = fixedNumber === -1 ? 2 : fixedNumber;
     const fixedNumberString = usableFixedNumber === -1 ? 'random' : usableFixedNumber;
-    addLine(`Level set to ${level}; Number set to ${fixedNumberString}`, true)
+    addLine(`Level set to ${level} and Number set to ${fixedNumberString}`, true)
     setLevel(level);
     const actualFixedNumber = usableFixedNumber === -1 ? 2 : usableFixedNumber;
     setFixedNumber(actualFixedNumber);
@@ -97,7 +106,7 @@ const MathDevice = () => {
 
       switch (level) {
         case 1:
-          if (Math.random() > 10.5) {
+          if (Math.random() > 0.5) {
             actual2ndNumber = actualFixedNumber;
             actual1stNumber = sequenceNumber;
           } else {
@@ -151,9 +160,11 @@ const MathDevice = () => {
       // console.log("CORRECT", avgTime, timeToSolve);
       setCorrectState(true);
       setRightCount(rightCount + 1);
-      addLine(problem.toAnswerString(), true);
-      setTimeout(setProblem(fixedNumber, sequenceNumber, level, currentOperator), 1000);
+      setTextToRead('', 'correct');
+      addLine(problem.toAnswerString(), true, true);
+      setTimeout(setProblem(fixedNumber, sequenceNumber, level, currentOperator), 1500);
     } else {
+      setTextToRead('', 'incorrect');
       console.log(`INCORRECT: ${answerText}`);
       setCorrectState(false);
     }
@@ -211,7 +222,12 @@ const MathDevice = () => {
     default:
       currentOutput = 'Hello';
   }
-  const addLine = (line: string, minusLine = false) => {
+  const addLine = (line: string, minusLine = false, isAnswer=false) => {
+    if (!isAnswer) {
+      console.log(normaliseLineText(line.toLowerCase()));
+      setTextToRead(numberText, normaliseLineText(line.toLowerCase()));
+    }
+
     setOutputLog((prevLines) => {
       const lastLine = prevLines[0] || '';
       const minusAnyway = matchLastCharacter(lastLine, '?') || matchLastCharacter(lastLine, '>');
@@ -291,4 +307,18 @@ export default MathDevice;
 
 const matchLastCharacter = (text: string, matchChar: string): boolean => {
   return text.charAt(text.length - 1) === matchChar;
+}
+
+const normaliseLineText = (text: string): string => {
+  return text
+    .split(' ')
+    .filter((word: string): boolean => {
+      return !['-->'].includes(word);
+    })
+    .map((word: string): string => {
+    if (word === '?') return 'what';
+    return (`${parseInt(word)}` === word) ? convertNumberToEnglish2(word) : word;
+
+  }).join(' ');
+
 }
