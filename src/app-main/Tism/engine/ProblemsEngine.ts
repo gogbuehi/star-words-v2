@@ -17,6 +17,7 @@ export class ProblemsEngine {
   }
 
   public checkAnswer(text: string): boolean {
+    if (text.length > 15) return false;
     const correctAnswer = this.evaluateProblem();
     const numericAnswer = parseInt(text);
     // Validate as a number

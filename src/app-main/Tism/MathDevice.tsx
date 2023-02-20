@@ -1,13 +1,7 @@
 import {NumPad} from "../components/NumPad";
 import {
-  CorrectBoxContainer,
-  DeviceContainer,
-  DeviceHeading, FixedNumberBox,
-  LeftBox, LevelBox,
-  MathBox, MathBoxButton,
-  OutputBox, OutputEntry, OutputEntryPast,
-  OutputSection, SelectedMathBox,
-  SpeakerBox,
+  CorrectBoxContainer, DeviceContainer,
+  LeftBox, LevelBox, MathBox, MathBoxButton, OutputBox, OutputSection, SelectedMathBox,
   TimerBox, TryAgainOutputBox
 } from "./TismStyled";
 import {SimplifiedTimer} from "./SimplifiedTimer";
@@ -18,6 +12,9 @@ import {generateRandomSequenceUpTo, timesTableNumbers} from "../PracticeMaths";
 import TerminalOutput from "./components/TerminalOutput";
 import {TimesTable} from "../../TimesTable";
 import CorrectBox from "./components/CorrectBox";
+import {convertNumberToEnglish2} from "./engine/NumberToWords";
+import Speaker from "./components/Speaker";
+
 const MAX_SEQUENCE = 12;
 const FRACTION_LABEL = '½,⅓,⅗,...';
 const MathDevice = () => {
@@ -40,6 +37,12 @@ const MathDevice = () => {
   const [attemptedCount, setAttemptedCount] = useState(0);
   const [rightCount, setRightCount] = useState(0);
 
+  const [numberText, setNumberText] = useState('');
+  const [numberTextIndex, setNumberTextIndex] = useState(0);
+
+  const numberTextArray = numberText.split(' ');
+  const audioFile = numberTextArray[numberTextIndex];
+
   const offset = fixedNumber > -1 ? fixedNumber - 1 : 0;
 
   const setCorrectState = (isCorrect: boolean) => {
@@ -48,7 +51,7 @@ const MathDevice = () => {
   }
 
   const setOperator = (operator: string) => {
-    switch(operator) {
+    switch (operator) {
       case '+':
         setDoAddition(true);
         setDoDivision(false);
@@ -68,7 +71,7 @@ const MathDevice = () => {
     }
   }
 
-  const setLevelAndProblems = (level: number, operator: string, fixedNumber=-1) => () => {
+  const setLevelAndProblems = (level: number, operator: string, fixedNumber = -1) => () => {
     if (level < 1 || level > 4) return;
     const usableFixedNumber = fixedNumber === -1 ? 2 : fixedNumber;
     const fixedNumberString = usableFixedNumber === -1 ? 'random' : usableFixedNumber;
@@ -81,18 +84,18 @@ const MathDevice = () => {
     setProblem(actualFixedNumber, 0, level, operator)();
   }
 
-  const setProblem = (actualFixedNumber: number, sequenceNumber: number, level: number, operator: string) =>  () => {
+  const setProblem = (actualFixedNumber: number, sequenceNumber: number, level: number, operator: string) => () => {
     const {firstNumber, secondNumber} = timesTableNumbers();
     let actual1stNumber = firstNumber;
     let actual2ndNumber = secondNumber;
     if (actualFixedNumber !== -1) {
       if (sequenceNumber > MAX_SEQUENCE) {
-        const nextNumber = (level < 4) ? actualFixedNumber : (actualFixedNumber+1)%(MAX_SEQUENCE+1) || 2;
-        setLevelAndProblems(((level+1)%4)||1, operator, nextNumber)();
+        const nextNumber = (level < 4) ? actualFixedNumber : (actualFixedNumber + 1) % (MAX_SEQUENCE + 1) || 2;
+        setLevelAndProblems(((level + 1) % 4) || 1, operator, nextNumber)();
         return;
       }
 
-      switch(level) {
+      switch (level) {
         case 1:
           if (Math.random() > 10.5) {
             actual2ndNumber = actualFixedNumber;
@@ -102,21 +105,21 @@ const MathDevice = () => {
             actual2ndNumber = sequenceNumber;
           }
 
-          setSequenceNumber(sequenceNumber+1);
+          setSequenceNumber(sequenceNumber + 1);
           break;
         case 2:
         case 3:
         case 4:
           actual1stNumber = actualFixedNumber;
           actual2ndNumber = sequenceNumber < MAX_SEQUENCE ? sequence[sequenceNumber] : sequenceNumber;
-          setSequenceNumber(sequenceNumber+1);
+          setSequenceNumber(sequenceNumber + 1);
           break;
       }
 
     }
     setFirstNumber(actual1stNumber);
     setSecondNumber(actual2ndNumber);
-    const p = new ProblemsEngine({firstNumber:actual1stNumber, secondNumber: actual2ndNumber, operator})
+    const p = new ProblemsEngine({firstNumber: actual1stNumber, secondNumber: actual2ndNumber, operator})
     addLine(p.toString());
     setAnswerText('');
     // setTimeLeft(30);
@@ -129,7 +132,7 @@ const MathDevice = () => {
       return;
     }
     // submit answer
-    setAttemptedCount(attemptedCount+1);
+    setAttemptedCount(attemptedCount + 1);
     if (problem.checkAnswer(answerText)) {
       // const timeToSolve = timeLeft - Math.floor((endTime - (new Date().getTime()))/1000);
       // setLastTime(timeToSolve);
@@ -147,7 +150,7 @@ const MathDevice = () => {
       // }
       // console.log("CORRECT", avgTime, timeToSolve);
       setCorrectState(true);
-      setRightCount(rightCount +1);
+      setRightCount(rightCount + 1);
       addLine(problem.toAnswerString(), true);
       setTimeout(setProblem(fixedNumber, sequenceNumber, level, currentOperator), 1000);
     } else {
@@ -155,15 +158,15 @@ const MathDevice = () => {
       setCorrectState(false);
     }
   }
-  const inputCallback = (problem: ProblemsEngine) => (a:string) => {
-    switch(a) {
+  const inputCallback = (problem: ProblemsEngine) => (a: string) => {
+    switch (a) {
       case '-':
         if (answerText.length > 0) {
-          setAnswerText(answerText.substring(0, answerText.length-1));
+          setAnswerText(answerText.substring(0, answerText.length - 1));
         }
         break;
       case '':
-        switch(outputState) {
+        switch (outputState) {
           case '+':
           case '-':
           case 'x':
@@ -182,12 +185,17 @@ const MathDevice = () => {
         break;
       default:
         setAnswerText(answerText + a);
+        const numberText = (answerText + a);
+        const text = convertNumberToEnglish2(numberText);
+        setNumberText(text);
+        setNumberTextIndex(0);
+        console.log(text);
     }
 
   }
   // 0123456789 + - x ÷ = . % &gt; &lt; ?
   let currentOutput = '';
-  switch(outputState) {
+  switch (outputState) {
     case '+':
     case '-':
     case 'x':
@@ -203,7 +211,7 @@ const MathDevice = () => {
     default:
       currentOutput = 'Hello';
   }
-  const addLine = (line: string, minusLine=false) => {
+  const addLine = (line: string, minusLine = false) => {
     setOutputLog((prevLines) => {
       const lastLine = prevLines[0] || '';
       const minusAnyway = matchLastCharacter(lastLine, '?') || matchLastCharacter(lastLine, '>');
@@ -217,45 +225,44 @@ const MathDevice = () => {
   return (<DeviceContainer>
     {/*<DeviceHeading>Math Device</DeviceHeading>*/}
     <OutputSection>
-      <LevelBox>Level: {level}</LevelBox>
-      <FixedNumberBox>#: {fixedNumber===-1 ?'Random' : fixedNumber}</FixedNumberBox>
-      <CorrectBoxContainer><CorrectBox rightCount={rightCount} /></CorrectBoxContainer>
-      <TimerBox><SimplifiedTimer timeInSeconds={30} problemNumber={1} storeEndTime={(timeLeft:number) => {}} /></TimerBox>
+      <LevelBox>Level: {level} | #: {fixedNumber === -1 ? 'Random' : fixedNumber}</LevelBox>
+      {/*<FixedNumberBox>#: {fixedNumber===-1 ?'Random' : fixedNumber}</FixedNumberBox>*/}
+      <CorrectBoxContainer><CorrectBox rightCount={rightCount}/></CorrectBoxContainer>
+      <TimerBox><SimplifiedTimer timeInSeconds={30} problemNumber={1} storeEndTime={(timeLeft: number) => {
+      }}/></TimerBox>
     </OutputSection>
     <OutputSection>
       {/*<SpeakerBox>Speaker</SpeakerBox>*/}
       <LeftBox>
         {['Number', 'Level'].map((operator, index) => {
           const NumBox = (operator === outputState) ? SelectedMathBox : MathBoxButton;
-          return (
-            <NumBox key={index}
-                    onClick={() => {
-                      setOutputState(operator);
-                      addLine(`Enter ${operator} -->`, true);
-                    }
-                      // setLevelAndProblems(num, fixedNumber)
-                    }
+          return (<NumBox key={index}
+                          onClick={() => {
+                            setOutputState(operator);
+                            addLine(`Enter ${operator} -->`, true);
+                          }
+                            // setLevelAndProblems(num, fixedNumber)
+                          }
 
-            >{operator}</NumBox>)
+          >{operator}</NumBox>)
         })}
         {['+', '-', 'x', '÷', FRACTION_LABEL].map((operator, index) => {
           const NumBox = (operator === outputState) ? SelectedMathBox : MathBoxButton;
-          return (
-            <NumBox key={index}
-                    onClick={() => {
-                      setProblem(fixedNumber, 0, level, operator)();
-                      setOperator(operator);
-                      setOutputState(operator);
+          return (<NumBox key={index}
+                          onClick={() => {
+                            setProblem(fixedNumber, 0, level, operator)();
+                            setOperator(operator);
+                            setOutputState(operator);
 
-                    }
-                      // setLevelAndProblems(num, fixedNumber)
-                    }
+                          }
+                            // setLevelAndProblems(num, fixedNumber)
+                          }
 
-            >{operator}</NumBox>)
+          >{operator}</NumBox>)
         })}
       </LeftBox>
       <OutputBox>
-      <TerminalOutput lines={outputLog} />
+        <TerminalOutput lines={outputLog}/>
       </OutputBox>
       {/*<OutputBox>*/}
       {/*  {outputLog.reverse().map((outputEntry, index) => {*/}
@@ -266,15 +273,22 @@ const MathDevice = () => {
       {/*</OutputBox>*/}
       <InputComponent>&gt; {answerText}</InputComponent>
     </OutputSection>
-    <MathBox><FractionCircle radius={100} divisions={9} activeIndex={0} /></MathBox>
-    <MathBox><NumPad pressCallback={inputCallback(problem)} /></MathBox>
-    {!doAddition  && (level < 3)?<MathBox> <TimesTable pixels={20} offset={offset}/> </MathBox>: ''}
+    <MathBox><FractionCircle radius={100} divisions={9} activeIndex={0}/></MathBox>
+    <MathBox><NumPad pressCallback={inputCallback(problem)}/></MathBox>
+    {!doAddition && (level < 3) ? <MathBox> <TimesTable pixels={20} offset={offset}/> </MathBox> : ''}
+    {audioFile && <MathBox>
+      <Speaker source={audioFile} onEnded={() => {
+        console.log('ended');
+        setNumberTextIndex(numberTextIndex + 1);
+      }}/>
+    </MathBox>}
+
 
   </DeviceContainer>)
 }
 
 export default MathDevice;
 
-const matchLastCharacter = (text:string, matchChar: string): boolean => {
-  return text.charAt(text.length-1) === matchChar;
+const matchLastCharacter = (text: string, matchChar: string): boolean => {
+  return text.charAt(text.length - 1) === matchChar;
 }
