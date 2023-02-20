@@ -106,7 +106,7 @@ const MathDevice = () => {
 
       switch (level) {
         case 1:
-          if (Math.random() > 0.5) {
+          if (Math.random() > 10.5) {
             actual2ndNumber = actualFixedNumber;
             actual1stNumber = sequenceNumber;
           } else {
