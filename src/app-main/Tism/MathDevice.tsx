@@ -31,7 +31,8 @@ const MathDevice = () => {
   const [fixedNumber, setFixedNumber] = useState(-1);
   const [sequenceNumber, setSequenceNumber] = useState(0);
   const [sequence, setSequence] = useState(generateRandomSequenceUpTo(MAX_SEQUENCE));
-  const [outputLog, setOutputLog] = useState([problem.toString()]);
+  const outputInitialState: string[] = [];
+  const [outputLog, setOutputLog] = useState(outputInitialState);
 
   const [isCorrect, setIsCorrect] = useState(false);
   const [attemptedCount, setAttemptedCount] = useState(0);
@@ -41,7 +42,8 @@ const MathDevice = () => {
   const [numberTextIndex, setNumberTextIndex] = useState(0);
 
   const numberTextArray = numberText.split(' ');
-  const audioFile = numberTextArray[numberTextIndex];
+  const audioFile_1 = numberTextArray[numberTextIndex];
+  const audioFile_2 = numberTextArray[numberTextIndex+1];
 
   const offset = fixedNumber > -1 ? fixedNumber - 1 : 0;
 
@@ -191,13 +193,18 @@ const MathDevice = () => {
             setLevelAndProblems(parseInt(answerText) || 1, currentOperator)();
             break;
           default:
+            if (numberText === '' && answerText === '') {
+              addLine(problem.toString());
+              return;
+            }
             console.log('I have no idea...');
         }
         break;
       default:
+
         setAnswerText(answerText + a);
-        const numberText = (answerText + a);
-        const text = convertNumberToEnglish2(numberText);
+        const updatedNumberText = (answerText + a);
+        const text = convertNumberToEnglish2(updatedNumberText);
         setNumberText(text);
         setNumberTextIndex(0);
         console.log(text);
@@ -228,7 +235,7 @@ const MathDevice = () => {
       setTextToRead(numberText, normaliseLineText(line.toLowerCase()));
     }
 
-    setOutputLog((prevLines) => {
+    setOutputLog((prevLines: string[]) => {
       const lastLine = prevLines[0] || '';
       const minusAnyway = matchLastCharacter(lastLine, '?') || matchLastCharacter(lastLine, '>');
       // const minusAnyway = prevLines[0] && (prevLines[0].charAt(prevLines[0].length-1) === '?' || line.charAt(line.length-1) === '?');
@@ -292,8 +299,8 @@ const MathDevice = () => {
     <MathBox><FractionCircle radius={100} divisions={9} activeIndex={0}/></MathBox>
     <MathBox><NumPad pressCallback={inputCallback(problem)}/></MathBox>
     {!doAddition && (level < 3) ? <MathBox> <TimesTable pixels={20} offset={offset}/> </MathBox> : ''}
-    {audioFile && <MathBox>
-      <Speaker source={audioFile} onEnded={() => {
+    {audioFile_1 && <MathBox>
+      <Speaker source={audioFile_1} source2={audioFile_2} onEnded={() => {
         console.log('ended');
         setNumberTextIndex(numberTextIndex + 1);
       }}/>

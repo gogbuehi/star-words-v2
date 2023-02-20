@@ -28,78 +28,7 @@ const MAP_OF_NUMBER_STRINGS = new Map([
   [TENS, ['', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety']],
   [TEENS, ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen']],
 ]);
-// const ARRAY_BASE = [
-//   [ONES],
-//   [TENS],
-//   [ONES,HUNDREDS],
-//   [ONES, THOUSANDS],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//   [ONES, MILLIONS],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//   [ONES, BILLIONS],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//   [ONES, TRILLIONS],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//   [ONES, QUADRILLIONS],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//   [ONES, QUINTILLIONS],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//   [ONES, QUINTILLIONS],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//   [ONES, TILLION_06],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//   [ONES, TILLION_07],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//   [ONES, TILLION_08],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//   [ONES, TILLION_09],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//   [ONES, TILLION_10],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//   [ONES, TILLION_11],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//   [ONES, TILLION_12],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//   [ONES, TILLION_13],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//   [ONES, TILLION_14],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//   [ONES, TILLION_15],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//   [ONES, TILLION_16],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//   [ONES, TILLION_17],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//   [ONES, TILLION_18],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//   [ONES, TILLION_19],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//   [ONES, TILLION_20],
-//   [TENS],
-//   [ONES, HUNDREDS],
-//
-// ];
+
 const TRI_ARRAY_BASE = [
   '',
   THOUSANDS,
@@ -157,45 +86,6 @@ const processTriDigits = (triDigits: string): string => {
 
   return triArray.length ? triArray.join(' ') : '';
 }
-// export const  convertNumberToEnglishText = (number: string): string => {
-//   const reversedNumber = reverseString(number);
-//   const textArray = [];
-//   if (reversedNumber.length > ARRAY_BASE.length) {
-//     return 'A really big number';
-//   }
-//   for(let i = 0; i < reversedNumber.length && i < ARRAY_BASE.length; i++) {
-//     const currentDigit = reversedNumber.charAt(i);
-//     const stringsToUse = ARRAY_BASE[i];
-//     for(let j = stringsToUse.length-1; j > -1; j--) {
-//       const key = stringsToUse[j];
-//       if (MAP_OF_NUMBER_STRINGS.has(key)) {
-//         const numString = MAP_OF_NUMBER_STRINGS.get(key) || ['boom'];
-//         let lowerZeroes = true;
-//         if (i%3) {
-//           for(let k = 1; k < ((i%3)+1); k++) {
-//             if (reversedNumber.charAt(i-k) !== '0') {
-//               lowerZeroes = false;
-//               break;
-//             }
-//           }
-//           if (currentDigit !== '0' && lowerZeroes && ARRAY_BASE[(i-i%3)][1]) {
-//             textArray.unshift(ARRAY_BASE[(i-i%3)][1]);
-//           }
-//
-//         }
-//
-//         if (numString[parseInt(currentDigit) || 0] !== '') {
-//           textArray.push(numString[parseInt(currentDigit) || 0]);
-//         }
-//
-//       } else if (currentDigit !== '0') {
-//         //console.log({otherProblem: key});
-//         textArray.push(key);
-//       }
-//     }
-//   }
-//   return textArray.reverse().join(' ');
-// }
 
 type GetDigitStringKeys = typeof ONES | typeof TENS | typeof TEENS;
 const getDigitString = (key: GetDigitStringKeys, index: number): string => {

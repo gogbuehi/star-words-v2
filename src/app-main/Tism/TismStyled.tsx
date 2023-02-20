@@ -37,11 +37,12 @@ export const MathBox = styled.div`
 export const MathBoxButton = styled(MathBox)`
   cursor: pointer;
   border-color: darkslateblue;
+  background-color: #282c34;
   padding: 20px;
 `;
 
 export const SelectedMathBox = styled(MathBoxButton)`
-  background-color: #282c34;
+  background-color: black;
   color: #61dafb;
 `;
 
