@@ -125,6 +125,7 @@ const TRI_ARRAY_BASE = [
   TILLION_20
 ];
 export const convertNumberToEnglish2 = (number: string): string => {
+  if (number === '0') return 'zero';
   if (number === '') return '';
   const reversedNumber = reverseString(number);
   const triDigitsArray = [];
