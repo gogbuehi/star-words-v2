@@ -72,6 +72,20 @@ export class ProblemsEngine {
     }
   }
 
+  public toSubmissionString(answerText: string): string {
+    const answer = calculate(this.firstNumber, this.secondNumber, this.operator);
+    switch(this.operator) {
+      case '+':
+      case 'x':
+        return `${this.firstNumber} ${this.operator} ${this.secondNumber} = ${answerText}`;
+      case '-':
+      case '÷':
+        return `${answer} ${this.operator} ${this.firstNumber} = ${answerText}`;
+      default:
+        throw new Error('evaluateProblem(): Invalid Operator');
+    }
+  }
+
 }
 
 const calculate = (firstNumber:number, secondNumber:number, operator: string): number => {

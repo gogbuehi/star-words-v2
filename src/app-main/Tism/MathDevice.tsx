@@ -1,6 +1,6 @@
 import {NumPad} from "../components/NumPad";
 import {
-  CorrectBoxContainer, DeviceContainer,
+  CorrectBoxContainer, DeviceContainer, FixedNumberBox,
   LeftBox, LevelBox, MathBox, MathBoxButton, OutputBox, OutputSection, SelectedMathBox,
   TimerBox, TryAgainOutputBox
 } from "./TismStyled";
@@ -14,9 +14,24 @@ import {TimesTable} from "../../TimesTable";
 import CorrectBox from "./components/CorrectBox";
 import {convertNumberToEnglish2} from "./engine/NumberToWords";
 import Speaker from "./components/Speaker";
+import QrCodeGenerator from "../components/QrCodeGenerator";
+import {DataStorageSystem, ValidLevels, ValidNumbers} from "./engine/DataStorageSystem";
+import {CypherSystem} from "./engine/CypherSystem";
 
 const MAX_SEQUENCE = 12;
 const FRACTION_LABEL = '½,⅓,⅗,...';
+
+type AddLineArgs = {
+  line: string;
+  minusLine?: boolean;
+  isAnswer?: boolean;
+  isCorrect?: boolean;
+}
+
+export type LineItem = {
+  line: string;
+  color: boolean;
+}
 const MathDevice = () => {
   const [doDivision, setDoDivision] = useState(false);
   const [doAddition, setDoAddition] = useState(false);
@@ -31,7 +46,7 @@ const MathDevice = () => {
   const [fixedNumber, setFixedNumber] = useState(-1);
   const [sequenceNumber, setSequenceNumber] = useState(0);
   const [sequence, setSequence] = useState(generateRandomSequenceUpTo(MAX_SEQUENCE));
-  const outputInitialState: string[] = [];
+  const outputInitialState: LineItem[] = [];
   const [outputLog, setOutputLog] = useState(outputInitialState);
 
   const [isCorrect, setIsCorrect] = useState(false);
@@ -45,6 +60,10 @@ const MathDevice = () => {
   const audioFile_1 = numberTextArray[numberTextIndex];
   const audioFile_2 = numberTextArray[numberTextIndex+1];
 
+  const [numberLevelBytes, setNumberLevelBytes] = useState((new DataStorageSystem()).toString());
+  const dss = new DataStorageSystem();
+  dss.fromHexString(numberLevelBytes);
+  const cs = new CypherSystem({name: 'elliott', data: numberLevelBytes, score: rightCount});
   const offset = fixedNumber > -1 ? fixedNumber - 1 : 0;
 
   const setCorrectState = (isCorrect: boolean) => {
@@ -86,7 +105,10 @@ const MathDevice = () => {
     if (level < 1 || level > 4) return;
     const usableFixedNumber = fixedNumber === -1 ? 2 : fixedNumber;
     const fixedNumberString = usableFixedNumber === -1 ? 'random' : usableFixedNumber;
-    addLine(`Level set to ${level} and Number set to ${fixedNumberString}`, true)
+    addLine({
+      line: `Level set to ${level} and Number set to ${fixedNumberString}`,
+      minusLine: true
+  })
     setLevel(level);
     const actualFixedNumber = usableFixedNumber === -1 ? 2 : usableFixedNumber;
     setFixedNumber(actualFixedNumber);
@@ -101,6 +123,8 @@ const MathDevice = () => {
     let actual2ndNumber = secondNumber;
     if (actualFixedNumber !== -1) {
       if (sequenceNumber > MAX_SEQUENCE) {
+        dss.levelComplete(actualFixedNumber as ValidNumbers, level as ValidLevels);
+        setNumberLevelBytes(dss.toString());
         const nextNumber = (level < 4) ? actualFixedNumber : (actualFixedNumber + 1) % (MAX_SEQUENCE + 1) || 2;
         setLevelAndProblems(((level + 1) % 4) || 1, operator, nextNumber)();
         return;
@@ -131,7 +155,7 @@ const MathDevice = () => {
     setFirstNumber(actual1stNumber);
     setSecondNumber(actual2ndNumber);
     const p = new ProblemsEngine({firstNumber: actual1stNumber, secondNumber: actual2ndNumber, operator})
-    addLine(p.toString());
+    addLine({line: p.toString()});
     setAnswerText('');
     // setTimeLeft(30);
     // setProblemNumber(problemNumber+1);
@@ -163,12 +187,22 @@ const MathDevice = () => {
       setCorrectState(true);
       setRightCount(rightCount + 1);
       setTextToRead('', 'correct');
-      addLine(problem.toAnswerString(), true, true);
+      addLine({
+        line: problem.toAnswerString(),
+        minusLine: true,
+        isAnswer: true
+      });
       setTimeout(setProblem(fixedNumber, sequenceNumber, level, currentOperator), 1500);
     } else {
       setTextToRead('', 'incorrect');
       console.log(`INCORRECT: ${answerText}`);
       setCorrectState(false);
+      addLine({
+        line: problem.toSubmissionString(answerText),
+        minusLine: true,
+        isAnswer: true,
+        isCorrect: false
+      });
     }
   }
   const inputCallback = (problem: ProblemsEngine) => (a: string) => {
@@ -194,7 +228,9 @@ const MathDevice = () => {
             break;
           default:
             if (numberText === '' && answerText === '') {
-              addLine(problem.toString());
+              addLine({
+                line: problem.toString()
+              });
               return;
             }
             console.log('I have no idea...');
@@ -229,18 +265,18 @@ const MathDevice = () => {
     default:
       currentOutput = 'Hello';
   }
-  const addLine = (line: string, minusLine = false, isAnswer=false) => {
+  const addLine = (args: AddLineArgs) => {
+    const { line, minusLine=false, isAnswer=false, isCorrect=true } = args;
     if (!isAnswer) {
       console.log(normaliseLineText(line.toLowerCase()));
       setTextToRead(numberText, normaliseLineText(line.toLowerCase()));
     }
 
-    setOutputLog((prevLines: string[]) => {
-      const lastLine = prevLines[0] || '';
-      const minusAnyway = matchLastCharacter(lastLine, '?') || matchLastCharacter(lastLine, '>');
-      // const minusAnyway = prevLines[0] && (prevLines[0].charAt(prevLines[0].length-1) === '?' || line.charAt(line.length-1) === '?');
+    setOutputLog((prevLines: LineItem[]) => {
+      const lastLine = prevLines[0] || {line: '', color: false};
+      const minusAnyway = matchLastCharacter(lastLine.line, '?') || matchLastCharacter(lastLine.line, '>');
       const linesToUse = minusAnyway ? prevLines.splice(1) : prevLines;
-      return [line, ...linesToUse]
+      return [{line, color: isCorrect}, ...linesToUse]
     });
   };
   const showCorrect = (level < 3) ? !!answerText && problem.checkAnswer(answerText) : isCorrect;
@@ -249,7 +285,7 @@ const MathDevice = () => {
     {/*<DeviceHeading>Math Device</DeviceHeading>*/}
     <OutputSection>
       <LevelBox>Level: {level} | #: {fixedNumber === -1 ? 'Random' : fixedNumber}</LevelBox>
-      {/*<FixedNumberBox>#: {fixedNumber===-1 ?'Random' : fixedNumber}</FixedNumberBox>*/}
+      <FixedNumberBox>&lt; M &gt;</FixedNumberBox>
       <CorrectBoxContainer><CorrectBox rightCount={rightCount}/></CorrectBoxContainer>
       <TimerBox><SimplifiedTimer timeInSeconds={30} problemNumber={1} storeEndTime={(timeLeft: number) => {
       }}/></TimerBox>
@@ -262,7 +298,10 @@ const MathDevice = () => {
           return (<NumBox key={index}
                           onClick={() => {
                             setOutputState(operator);
-                            addLine(`Enter ${operator} -->`, true);
+                            addLine({
+                              line: `Enter ${operator} -->`,
+                              minusLine: true,
+                          });
                           }
                             // setLevelAndProblems(num, fixedNumber)
                           }
@@ -306,7 +345,9 @@ const MathDevice = () => {
       }}/>
     </MathBox>}
 
-
+    <MathBox><QrCodeGenerator
+    url={cs.encryptScore(rightCount) + ' ' + cs.encryptData(numberLevelBytes).toUpperCase() + ' ' + cs.encryptName()}
+    /></MathBox>
   </DeviceContainer>)
 }
 

@@ -1,16 +1,19 @@
 import {OutputEntry, OutputEntryPast} from "../TismStyled";
+import {LineItem} from "../MathDevice";
 
 type TerminalOutputProps = {
-  lines: string[];
+  lines: LineItem[];
 }
 const TerminalOutput = (props: TerminalOutputProps) => {
   const { lines } = props;
   return (
     <div className="terminal">
-      {lines.map((line, index) => {
+      {lines.map((lineItem, index) => {
+        const {line, color}  = lineItem;
+        const colorToUse = color ? 'greenyellow' : 'red';
         const OutputComponent = index === 0 ? OutputEntry : OutputEntryPast;
         return (
-        <OutputComponent key={index} className="terminal-line">| {line}</OutputComponent>
+        <OutputComponent key={index} className="terminal-line" color={colorToUse}>| {line}</OutputComponent>
       )
       })
       }

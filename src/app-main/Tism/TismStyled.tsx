@@ -68,14 +68,18 @@ export const TryAgainOutputBox = styled(OutputBox)`
   background-color: #200000;
 `;
 
+type OutputEntryProps = {
+  color?: 'greenyellow' | 'red';
+}
 export const OutputEntry = styled.div`
   background-color: black;
-  color: greenyellow;
+  color: ${(props: OutputEntryProps) => (props.color || 'greenyellow')};
   border-bottom: dotted 1px #303030;
 `;
 
 export const OutputEntryPast = styled(OutputEntry)`
   color: #7DcF00;
+  color: ${(props: OutputEntryProps) => (props.color || 'greenyellow')};
   font-size: x-small;
 `;
 
