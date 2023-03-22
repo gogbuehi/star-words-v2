@@ -18,6 +18,7 @@ export const useTextInput = () => {
 
     setOutputLog((prevLines: LineItem[]) => {
       const lastLine = prevLines[0] || {line: '', color: false};
+      if(lastLine.line === line) return prevLines;
       const minusAnyway = matchLastCharacter(lastLine.line, '~') || matchLastCharacter(lastLine.line, '>');
       const linesToUse = minusAnyway ? prevLines.splice(1) : prevLines;
       return [{line, color: isCorrect}, ...linesToUse]
