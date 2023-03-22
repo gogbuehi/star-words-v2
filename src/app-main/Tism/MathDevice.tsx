@@ -353,11 +353,11 @@ const MathDevice = () => {
 
 export default MathDevice;
 
-const matchLastCharacter = (text: string, matchChar: string): boolean => {
+export const matchLastCharacter = (text: string, matchChar: string): boolean => {
   return text.charAt(text.length - 1) === matchChar;
 }
 
-const normaliseLineText = (text: string): string => {
+export const normaliseLineText = (text: string): string => {
   return text
     .split(' ')
     .filter((word: string): boolean => {

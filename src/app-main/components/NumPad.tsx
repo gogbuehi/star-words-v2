@@ -8,7 +8,7 @@ export const NumPad = (propsRecieved: NumPadProps) => {
   const clickMethod = (num: string) => () => {
     pressCallback(num);
   }
-  return (<NumTable>
+  return (<NumTable1>
     <tbody>
     <tr>
       <NumCell onClick={clickMethod('7')}>7</NumCell>
@@ -31,10 +31,10 @@ export const NumPad = (propsRecieved: NumPadProps) => {
       <NumCell onClick={clickMethod('')}>GO</NumCell>
     </tr>
     </tbody>
-  </NumTable>)
+  </NumTable1>)
 };
 
-const NumTable = styled.table`
+const NumTable1 = styled.table`
   margin:10px;
   
 `

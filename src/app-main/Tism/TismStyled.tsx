@@ -75,6 +75,14 @@ export const OutputEntry = styled.div`
   background-color: black;
   color: ${(props: OutputEntryProps) => (props.color || 'greenyellow')};
   border-bottom: dotted 1px #303030;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 20px;
+  padding-left: 20px;
+  //padding-right: 20px;
+  text-align: left;
+  display:block;
 `;
 
 export const OutputEntryPast = styled(OutputEntry)`

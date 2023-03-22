@@ -202,8 +202,8 @@ const PracticeMaths = (props: MathsProps) => {
 export default PracticeMaths;
 
 export const timesTableNumbers = () => {
-  const firstNumber = randomInteger(10);
-  const secondNumber = randomInteger(10);
+  const firstNumber = randomInteger(12);
+  const secondNumber = randomInteger(12);
 
   return {
     firstNumber, secondNumber

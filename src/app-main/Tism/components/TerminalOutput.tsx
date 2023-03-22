@@ -1,5 +1,6 @@
 import {OutputEntry, OutputEntryPast} from "../TismStyled";
 import {LineItem} from "../MathDevice";
+import {TerminalOutputContainer} from "../star-maths/layout/TerminalOutput.styled";
 
 type TerminalOutputProps = {
   lines: LineItem[];
@@ -7,17 +8,17 @@ type TerminalOutputProps = {
 const TerminalOutput = (props: TerminalOutputProps) => {
   const { lines } = props;
   return (
-    <div className="terminal">
+    <TerminalOutputContainer>
       {lines.map((lineItem, index) => {
         const {line, color}  = lineItem;
         const colorToUse = color ? 'greenyellow' : 'red';
         const OutputComponent = index === 0 ? OutputEntry : OutputEntryPast;
         return (
-        <OutputComponent key={index} className="terminal-line" color={colorToUse}>| {line}</OutputComponent>
+        <OutputComponent key={index} color={colorToUse}>| {line}</OutputComponent>
       )
       })
       }
-    </div>
+    </TerminalOutputContainer>
   );
 };
 

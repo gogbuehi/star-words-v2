@@ -14,6 +14,7 @@ import Addition from "./Addition";
 import Subtraction from "./Subtraction";
 import MathDevice from "./app-main/Tism/MathDevice";
 import PracticeWriting from "./app-main/Writing/PracticeWriting";
+import {StarMaths} from "./app-main/Tism/StarMaths";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -31,7 +32,7 @@ root.render(
 
         <Route path="division" element={<Division />} />
         <Route path="subtraction" element={<Subtraction />} />
-        <Route path="math" element={<MathDevice />} />
+        <Route path="math" element={<StarMaths />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
