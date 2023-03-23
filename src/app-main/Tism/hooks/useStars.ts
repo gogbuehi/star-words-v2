@@ -8,13 +8,17 @@ export const useStars = () => {
 
   const setRightCountFn = (rightCount: number) => {
     setRightCount(rightCount);
-    setCookie("stars", `${rightCount}`);
+    // setCookie("stars", `${rightCount}`);
+  }
+  const saveStars = (starCount: number) => {
+    setCookie("stars", `${starCount}`);
   }
 
   return {
     rightCount,
     setRightCount: setRightCountFn,
     cookies,
-    setCookie
+    setCookie,
+    saveStars
   }
 }

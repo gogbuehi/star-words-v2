@@ -15,7 +15,8 @@ export const NumberInput = () => {
     answerText, setAnswerText,
     problem, setProblem,
     addLine,
-    rightCount, setRightCount} = useContext(StarMathsContext);
+    rightCount, setRightCount, saveStars
+  } = useContext(StarMathsContext);
 
   const problemCallback = (problem: ProblemsEngine) => {
     addLine({line: problem.toString()});
@@ -51,11 +52,11 @@ export const NumberInput = () => {
           if (sequenceNumber === MAX_NUMBER) {
             const nextLevel = (level + 1)%(MAX_LEVEL+1);
             setLevel(nextLevel || 1);
+            saveStars(rightCount+1);
             currentLevel = nextLevel || 1;
             if (level === MAX_LEVEL) {
               currentFixedNumber = fixedNumber+1;
               setFixedNumber(currentFixedNumber);
-
             }
           }
           setSequenceNumber(nextSequenceNumber);
@@ -71,6 +72,9 @@ export const NumberInput = () => {
           setRightCount(rightCount+1);
         } else {
           addLine({line: 'Try again'});
+          if (rightCount > 0) {
+            setRightCount(rightCount-1);
+          }
         }
         // switch (outputState) {
         //   case '+':

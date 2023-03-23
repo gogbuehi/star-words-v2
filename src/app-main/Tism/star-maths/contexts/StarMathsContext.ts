@@ -28,5 +28,6 @@ export const StarMathsContext = createContext({
 
   rightCount: 0,
   setRightCount: (count: number) => {},
-  setCookie: (name: "stars", stars: any) => {}
+  setCookie: (name: "stars", stars: any) => {},
+  saveStars: (stars: number) => {}
 });
