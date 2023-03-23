@@ -15,7 +15,8 @@ export const NumberInput = () => {
     answerText, setAnswerText,
     problem, setProblem,
     addLine,
-    rightCount, setRightCount, saveStars
+    rightCount, setRightCount, saveStars,
+    theme
   } = useContext(StarMathsContext);
 
   const problemCallback = (problem: ProblemsEngine) => {
@@ -36,6 +37,7 @@ export const NumberInput = () => {
           const nextSequenceNumber = sequenceNumber !== -1 ? 0  :sequenceNumber;
           setSequenceNumber(nextSequenceNumber);
           setProblem({operator: currentOperator, fixedNumber: parseInt(answerText) || 2, sequenceNumber: 0, callBack: problemCallback})
+          setLevel(1);
           return;
         }
         if (problem.evaluateProblem() === -1) {
@@ -112,24 +114,32 @@ export const NumberInput = () => {
   return (<NumTable>
     <tbody>
     <tr>
-      <NumCell onClick={clickMethod('7')}>7</NumCell>
-      <NumCell onClick={clickMethod('8')}>8</NumCell>
-      <NumCell onClick={clickMethod('9')}>9</NumCell>
+      {[7,8,9].map((num) => (
+        <NumCell
+          key={`${num}`}
+          theme={theme} onClick={clickMethod(`${num}`)}>{num}</NumCell>
+      ))}
     </tr>
     <tr>
-      <NumCell onClick={clickMethod('4')}>4</NumCell>
-      <NumCell onClick={clickMethod('5')}>5</NumCell>
-      <NumCell onClick={clickMethod('6')}>6</NumCell>
+      {[4,5,6].map((num) => (
+        <NumCell
+          key={`${num}`}
+          theme={theme} onClick={clickMethod(`${num}`)}>{num}</NumCell>
+      ))}
     </tr>
     <tr>
-      <NumCell onClick={clickMethod('1')}>1</NumCell>
-      <NumCell onClick={clickMethod('2')}>2</NumCell>
-      <NumCell onClick={clickMethod('3')}>3</NumCell>
+      {[1,2,3].map((num) => (
+        <NumCell
+          key={`${num}`}
+          theme={theme} onClick={clickMethod(`${num}`)}>{num}</NumCell>
+      ))}
     </tr>
     <tr>
-      <NumCell onClick={clickMethod('-')}>&lt;</NumCell>
-      <NumCell onClick={clickMethod('0')}>0</NumCell>
-      <NumCell onClick={clickMethod('')}>GO</NumCell>
+      {['-','0',''].map((num) => (
+        <NumCell
+          key={`${num}`}
+          theme={theme} onClick={clickMethod(`${num}`)}>{num === '-' ? '<' : num || 'GO'}</NumCell>
+      ))}
     </tr>
     </tbody>
   </NumTable>);

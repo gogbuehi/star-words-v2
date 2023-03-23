@@ -10,10 +10,10 @@ export const useLevel = () => {
   const [sequence, setSequence] = useState(generateRandomSequenceUpTo(MAX_NUMBER));
 
   const setLevelFn = (level: number): void => {
-    const actualLevel = oneToZero(level, MAX_LEVEL);
-    if (actualLevel === 0) {
-      setNumberFn(zeroToOne(fixedNumber)+1);
-    }
+    // const actualLevel = oneToZero(level, MAX_LEVEL);
+    // if (actualLevel === 0) {
+    //   setNumberFn(zeroToOne(fixedNumber)+1);
+    // }
     setLevel(oneToZero(level, MAX_LEVEL));
   }
   const nextLevel = () => {

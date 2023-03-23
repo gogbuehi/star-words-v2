@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {getBorderColor, Theme} from "../../hooks/useTheme";
 
 export const BASE_UNIT = 80;
 
@@ -24,7 +25,8 @@ export const BaseContainer = styled.div`
   line-height: ${BASE_UNIT}px;
   text-align: left;
   // Border style
-  border: solid 1px #61dafb;
+  // border: solid 1px #61dafb;
+  border: solid 1px ${getBorderColor};
   border-radius: 20px;
   // Colours
 `;
