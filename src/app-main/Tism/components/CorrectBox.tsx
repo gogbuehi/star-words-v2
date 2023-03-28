@@ -12,7 +12,6 @@ const CorrectBox = (props: CorrectBoxProps) => {
   const {rightCount} = props;
   const { rightCount: uRightCount} = useContext(StarMathsContext);
   if (rightCount === -1) {
-    console.log({uRightCount});
     return <Fragment>{starDisplay(uRightCount)}</Fragment>;
   }
 

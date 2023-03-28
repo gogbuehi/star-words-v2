@@ -48,6 +48,7 @@ export const NumberInput = () => {
           return;
         }
         if (problem.checkAnswer(answerText)) {
+          addLine({line: problem.toAnswerString()});
           const nextSequenceNumber = sequenceNumber !== -1 ? (sequenceNumber+1)%(MAX_NUMBER+1) : sequenceNumber;
           let currentLevel = level;
           let currentFixedNumber = fixedNumber;
@@ -73,7 +74,9 @@ export const NumberInput = () => {
           setAnswerText('');
           setRightCount(rightCount+1);
         } else {
-          addLine({line: 'Try again'});
+          // addLine({line: problem.toString()});
+          addLine({line: problem.toSubmissionString(answerText), isCorrect: false});
+          setAnswerText('');
           if (rightCount > 0) {
             setRightCount(rightCount-1);
           }

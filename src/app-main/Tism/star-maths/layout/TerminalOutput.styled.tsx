@@ -6,4 +6,5 @@ export const TerminalOutputContainer = styled.div`
   overflow: hidden;
   background-color: #282848;
   border-radius: ${BASE_UNIT/4}px;
+  font-family: "Courier New";
 `;

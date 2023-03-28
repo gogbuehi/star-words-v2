@@ -7,7 +7,6 @@ export const PromptAndResponse = () => {
   const { outputLog } = useContext(StarMathsContext);
   // const problem = new ProblemsEngine({firstNumber, secondNumber, operator: currentOperator});
 
-  console.log({outputLog});
   return <>
     <TerminalOutput lines={outputLog} />
   </>;

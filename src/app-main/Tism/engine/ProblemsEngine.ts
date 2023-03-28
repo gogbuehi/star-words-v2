@@ -45,6 +45,7 @@ export class ProblemsEngine {
   }
 
   public toString(): string {
+    if (!this.isReady()) return 'Get ready...'
     const answer = calculate(this.firstNumber, this.secondNumber, this.operator);
     switch(this.operator) {
       case '+':
@@ -56,6 +57,10 @@ export class ProblemsEngine {
       default:
         throw new Error('evaluateProblem(): Invalid Operator');
     }
+  }
+
+  public isReady(): boolean {
+    return this.evaluateProblem() !== -1;
   }
 
   public toAnswerString(): string {

@@ -33,5 +33,8 @@ export const StarMathsContext = createContext({
   saveStars: (stars: number) => {},
 
   themeStyle: THEME_MATHS,
-  theme: "MATHS"
+  theme: "MATHS",
+
+  nav: '',
+  setNav: (nav: string) => {}
 });

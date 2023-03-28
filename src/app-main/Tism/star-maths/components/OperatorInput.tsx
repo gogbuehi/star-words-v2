@@ -4,14 +4,18 @@ import {StarMathsContext} from "../contexts/StarMathsContext";
 import {ProblemsEngine} from "../../engine/ProblemsEngine";
 
 export const OperatorInput = () => {
-  const {setOperator, currentOperator, setProblem, addLine, fixedNumber} = useContext(StarMathsContext);
+  const {setOperator, currentOperator, setProblem, addLine, fixedNumber, setNav} = useContext(StarMathsContext);
   const displayFixedNumber = fixedNumber === -1 ? '--' : fixedNumber;
 
   const problemCallback = (problem: ProblemsEngine) => {
-    console.log({problem});
     addLine({line: problem.toString()});
   }
   const clickMethod = (operator: string) => () => {
+    if (operator === '←') {
+      console.log('SET NAV');
+      setNav('Nav');
+      return;
+    }
     setOperator(operator);
     if (operator === '#') {
       addLine({line: 'Enter number:'});
@@ -26,7 +30,8 @@ export const OperatorInput = () => {
     ['-','-'],
     ['x','x'],
     ['÷','÷'],
-    ['#','#']
+    ['#','#'],
+    ['←','←']
   ]);
 
   const displayOperator = (op: string): string => {
@@ -47,7 +52,7 @@ export const OperatorInput = () => {
     </tr>
     <tr>
       <NumCell onClick={clickMethod('#')}>{displayOperator('#')}:{displayFixedNumber}</NumCell>
-      <NumCell onClick={clickMethod('÷')}>{displayOperator('÷')}</NumCell>
+      <NumCell onClick={clickMethod('←')}>{displayOperator('←')}</NumCell>
     </tr>
     </tbody>
   </NumTable>);

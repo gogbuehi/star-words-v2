@@ -7,7 +7,7 @@ export type AddLineArgs = {
   isCorrect?: boolean;
 }
 export const useTextInput = () => {
-  const outputInitialState: LineItem[] = [];
+  const outputInitialState: LineItem[] = [{line: "Select Operator or Press 'GO'", color: true}];
   const [outputLog, setOutputLog] = useState(outputInitialState);
   const addLineFn = (args: AddLineArgs) => {
     const { line, minusLine=false, isAnswer=false, isCorrect=true } = args;
