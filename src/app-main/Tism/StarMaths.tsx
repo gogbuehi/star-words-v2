@@ -6,7 +6,7 @@ import {LevelNumberInfo} from "./star-maths/components/LevelNumberInfo";
 import {PromptAndResponse} from "./star-maths/components/PromptAndResponse";
 import {StarMathsContext} from "./star-maths/contexts/StarMathsContext";
 
-import {Theme, useTheme} from "./hooks/useTheme";
+import {Theme} from "./hooks/useTheme";
 
 import {NumberInput} from "./star-maths/components/NumberInput";
 import {TextInput} from "./star-maths/components/TextInput";

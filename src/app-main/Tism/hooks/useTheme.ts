@@ -2,13 +2,17 @@ import {useState} from "react";
 
 export type Theme = "MATHS" | "WORDS";
 export const useTheme = () => {
-  const defaultTheme: Theme = "MATHS";
+  const defaultTheme: Theme = "MATHS" as Theme;
   const [theme, setTheme] = useState(defaultTheme);
+
+  const setThemeFn = (theme: string) => {
+    setTheme(theme as Theme);
+  }
 
   return {
     theme,
     themeStyle: THEME_MATHS,
-    setTheme
+    setTheme: setThemeFn
   };
 };
 export type ThemeProp = {

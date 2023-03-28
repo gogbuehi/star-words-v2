@@ -18,7 +18,6 @@ export const TheDevice = () => {
   const uMathDevice = useMathDevice();
   const uStars = useStars();
   const uTheme = useTheme();
-  console.log({nav: uNav.nav});
 
   let OutputComponent;
   switch(uNav.nav) {

@@ -7,7 +7,6 @@ export const Nav = () => {
     Nav
     <br />
     <a onClick={() => {
-      console.log('Setting nav...')
       setNav('Maths');
     }}>Maths</a>
   </div>

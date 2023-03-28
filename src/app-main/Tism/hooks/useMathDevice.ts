@@ -28,7 +28,7 @@ export const useMathDevice = () => {
     let actual2ndNumber = secondNumber;
 
     if (fixedNumber !== -1 && sequenceNumber > -1) {
-      if (Math.random() > 0.5) {
+      if (Math.random() > 0.5 && !doDivision) {
         actual2ndNumber = fixedNumber;
         actual1stNumber = getSequenceNumber(sequenceNumber,sequence);
       } else {

@@ -3,7 +3,7 @@ import {AddLineArgs} from "../../hooks/useTextInput";
 import {LineItem} from "../../MathDevice";
 import {ProblemsEngine} from "../../engine/ProblemsEngine";
 import {SetProblemArgs} from "../../hooks/useMathDevice";
-import {THEME_MATHS} from "../../hooks/useTheme";
+import {Theme, THEME_MATHS} from "../../hooks/useTheme";
 const problem = new ProblemsEngine({firstNumber:1, secondNumber: 2, operator: '+'});
 export const StarMathsContext = createContext({
   level: -1,
@@ -33,7 +33,8 @@ export const StarMathsContext = createContext({
   saveStars: (stars: number) => {},
 
   themeStyle: THEME_MATHS,
-  theme: "MATHS",
+  theme: "MATHS" as Theme,
+  setTheme: (theme: string) => {},
 
   nav: '',
   setNav: (nav: string) => {}
