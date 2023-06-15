@@ -26,6 +26,8 @@ export type ThemeProps = {
 }
 
 const COLOUR_LIGHT_BLUE = "#61dafb";
+const COLOUR_NORMAL_BLUE = "#41badb"
+const COLOUR_DARK_BLUE = "#219abb"
 const COLOUR_LIGHT_YELLOW = "#dafb61";
 const COLOUR_LIGHT_GRAY = "#dadada";
 const COLOUR_DARK_GRAY = "#303030";
@@ -33,7 +35,7 @@ const COLOUR_DARK_GREEN = "#405030";
 const COLOUR_DARK_PURPLE = "#503040";
 export const THEME_MATHS: ThemeProps = {
   color: COLOUR_LIGHT_BLUE,
-  borderColor: COLOUR_LIGHT_BLUE,
+  borderColor: COLOUR_DARK_BLUE,
   buttonBgColor: COLOUR_LIGHT_BLUE,
   buttonColor: COLOUR_DARK_GRAY
 }

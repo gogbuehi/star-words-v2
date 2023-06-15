@@ -4,43 +4,43 @@ import styled from "styled-components";
 const Layout = () => {
   return (
     <>
-      <nav>
-        <ul>
-          <TopMenuItem>
-            <Link to="/">Maths Time</Link>
-          </TopMenuItem>
-          {/*<TopMenuItem>*/}
-          {/*  <Link to="/addition">Addition</Link>*/}
-          {/*</TopMenuItem>*/}
-          {/*<TopMenuItem>*/}
-          {/*  <Link to="/subtraction">Subtraction</Link>*/}
-          {/*</TopMenuItem>*/}
-          {/*<TopMenuItem>*/}
-          {/*  <Link to="/multiplication">Multiplication</Link>*/}
-          {/*</TopMenuItem>*/}
-          {/*<TopMenuItem>*/}
-          {/*  <Link to="/division">Division</Link>*/}
-          {/*</TopMenuItem>*/}
-          <TopMenuItem>
-            <Link to="/write">Read</Link>
-          </TopMenuItem>
-          <TopMenuItem>
-            <Link to="/giraffe">Giraffe, Pelly, & Me</Link>
-          </TopMenuItem>
-          <TopMenuItem>
-            <Link to="/write">Write</Link>
-          </TopMenuItem>
-          <TopMenuItem>
-            <Link to="/math">Math v1</Link>
-          </TopMenuItem>
-          {/*<TopMenuItem>*/}
-          {/*  <Link to="/math">Math App</Link>*/}
-          {/*</TopMenuItem>*/}
-          {/*<TopMenuItem>*/}
-          {/*  <Link to="/words">Tricky Words</Link>*/}
-          {/*</TopMenuItem>*/}
-        </ul>
-      </nav>
+      {/*<nav>*/}
+      {/*  <ul>*/}
+      {/*    <TopMenuItem>*/}
+      {/*      <Link to="/">Maths Time</Link>*/}
+      {/*    </TopMenuItem>*/}
+      {/*    /!*<TopMenuItem>*!/*/}
+      {/*    /!*  <Link to="/addition">Addition</Link>*!/*/}
+      {/*    /!*</TopMenuItem>*!/*/}
+      {/*    /!*<TopMenuItem>*!/*/}
+      {/*    /!*  <Link to="/subtraction">Subtraction</Link>*!/*/}
+      {/*    /!*</TopMenuItem>*!/*/}
+      {/*    /!*<TopMenuItem>*!/*/}
+      {/*    /!*  <Link to="/multiplication">Multiplication</Link>*!/*/}
+      {/*    /!*</TopMenuItem>*!/*/}
+      {/*    /!*<TopMenuItem>*!/*/}
+      {/*    /!*  <Link to="/division">Division</Link>*!/*/}
+      {/*    /!*</TopMenuItem>*!/*/}
+      {/*    <TopMenuItem>*/}
+      {/*      <Link to="/write">Read</Link>*/}
+      {/*    </TopMenuItem>*/}
+      {/*    <TopMenuItem>*/}
+      {/*      <Link to="/giraffe">Giraffe, Pelly, & Me</Link>*/}
+      {/*    </TopMenuItem>*/}
+      {/*    <TopMenuItem>*/}
+      {/*      <Link to="/write">Write</Link>*/}
+      {/*    </TopMenuItem>*/}
+      {/*    <TopMenuItem>*/}
+      {/*      <Link to="/math">Math v1</Link>*/}
+      {/*    </TopMenuItem>*/}
+      {/*    /!*<TopMenuItem>*!/*/}
+      {/*    /!*  <Link to="/math">Math App</Link>*!/*/}
+      {/*    /!*</TopMenuItem>*!/*/}
+      {/*    /!*<TopMenuItem>*!/*/}
+      {/*    /!*  <Link to="/words">Tricky Words</Link>*!/*/}
+      {/*    /!*</TopMenuItem>*!/*/}
+      {/*  </ul>*/}
+      {/*</nav>*/}
 
       <Outlet />
     </>

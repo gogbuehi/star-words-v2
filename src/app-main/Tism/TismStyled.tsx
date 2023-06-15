@@ -78,7 +78,7 @@ export const OutputEntry = styled.div`
   width: 100%;
   height: 40px;
   line-height: 40px;
-  border-radius: 20px;
+  border-radius: 5px;
   padding-left: 20px;
   //padding-right: 20px;
   text-align: left;

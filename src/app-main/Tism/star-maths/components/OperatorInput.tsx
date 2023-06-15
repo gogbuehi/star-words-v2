@@ -2,10 +2,9 @@ import {NumCell, NumTable} from "../layout/NumberInput.layout";
 import {useContext} from "react";
 import {StarMathsContext} from "../contexts/StarMathsContext";
 import {ProblemsEngine} from "../../engine/ProblemsEngine";
-
+const FRACTION_LABEL = '½…';
 export const OperatorInput = () => {
   const {setOperator, currentOperator, setProblem, addLine, fixedNumber, setNav} = useContext(StarMathsContext);
-  const displayFixedNumber = fixedNumber === -1 ? '--' : fixedNumber;
 
   const problemCallback = (problem: ProblemsEngine) => {
     addLine({line: problem.toString()});
@@ -30,6 +29,8 @@ export const OperatorInput = () => {
     ['-','-'],
     ['x','x'],
     ['÷','÷'],
+    [FRACTION_LABEL,FRACTION_LABEL],
+    ['%','%'],
     ['#','#'],
     ['←','←']
   ]);
@@ -43,17 +44,12 @@ export const OperatorInput = () => {
   return (<NumTable>
     <tbody>
     <tr>
-      <NumCell onClick={clickMethod('+')}>{displayOperator('+')}</NumCell>
-      <NumCell onClick={clickMethod('-')}>{displayOperator('-')}</NumCell>
+      {Array.from(operatorStrings.keys()).map((operatorKey) => {
+        return <NumCell key={operatorKey} onClick={clickMethod(operatorKey)}>{displayOperator(operatorKey)}</NumCell>
+      })}
     </tr>
-    <tr>
-      <NumCell onClick={clickMethod('x')}>{displayOperator('x')}</NumCell>
-      <NumCell onClick={clickMethod('÷')}>{displayOperator('÷')}</NumCell>
-    </tr>
-    <tr>
-      <NumCell onClick={clickMethod('#')}>{displayOperator('#')}:{displayFixedNumber}</NumCell>
-      <NumCell onClick={clickMethod('←')}>{displayOperator('←')}</NumCell>
-    </tr>
+
+    {/*</tr>*/}
     </tbody>
   </NumTable>);
 

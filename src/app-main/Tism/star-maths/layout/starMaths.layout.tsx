@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {getBorderColor, getColor, Theme} from "../../hooks/useTheme";
 import { ReactElement } from "react";
 
-export const BASE_UNIT = 80;
+export const BASE_UNIT = 40;
 
 export const  StarMathsContainer = styled.div`
   width: 100%;
@@ -28,7 +28,7 @@ export const BaseFlexContainer = styled.div`
   // line-height: ${BASE_UNIT}px;
   text-align: left;
   // Border style
-  border-radius: 20px;
+  border-radius: 5px;;
   // Colours
 `;
 export const BaseContainer = styled.div`
@@ -44,7 +44,7 @@ export const BaseContainer = styled.div`
   // Border style
   // border: solid 1px #61dafb;
   border: solid 1px ${getBorderColor};
-  border-radius: 20px;
+  border-radius: 5px;;
   // Colours
   color: ${getColor};
 `;
@@ -56,7 +56,7 @@ const CenteredText = styled.div`
   margin: 0px;
   border: solid 1px yellow;
   box-sizing: border-box;
-  border-radius: 20px;
+  border-radius: 5px;;
   font-family: monospace;
   font-weight: normal;
   font-size: ${BASE_UNIT/4}px;

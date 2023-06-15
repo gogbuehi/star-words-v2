@@ -14,7 +14,7 @@ export const NumCell = styled.td`
   text-align: center;
   background-color: ${getButtonBgColor};
   color: #303030;
-  border-radius: ${BASE_UNIT/4}px;
+  border-radius: 5px;
   margin: 0px;
   padding: 0px;
   
