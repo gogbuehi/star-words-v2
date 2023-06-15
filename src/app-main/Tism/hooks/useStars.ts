@@ -1,10 +1,12 @@
 import {useState} from "react";
 import { useCookies } from 'react-cookie';
+import {MathsRecord} from "../engine/MathsRecord";
 
 export const useStars = () => {
   const [attemptedCount, setAttemptedCount] = useState(0);
   const [cookies, setCookie, removeCookie] = useCookies(["stars"]);
   const [rightCount, setRightCount] = useState(parseInt(cookies?.stars || "0"));
+  const [mathsRecord, setMathsRecord] = useState(new MathsRecord());
 
   const setRightCountFn = (rightCount: number) => {
     setRightCount(rightCount);
@@ -19,6 +21,8 @@ export const useStars = () => {
     setRightCount: setRightCountFn,
     cookies,
     setCookie,
-    saveStars
+    saveStars,
+    mathsRecord
+
   }
 }

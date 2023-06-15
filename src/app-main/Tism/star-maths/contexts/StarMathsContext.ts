@@ -4,6 +4,7 @@ import {LineItem} from "../../MathDevice";
 import {ProblemsEngine} from "../../engine/ProblemsEngine";
 import {SetProblemArgs} from "../../hooks/useMathDevice";
 import {Theme, THEME_MATHS} from "../../hooks/useTheme";
+import {MathsRecord} from "../../engine/MathsRecord";
 const problem = new ProblemsEngine({firstNumber:1, secondNumber: 2, operator: '+'});
 export const StarMathsContext = createContext({
   level: -1,
@@ -31,6 +32,7 @@ export const StarMathsContext = createContext({
   setRightCount: (count: number) => {},
   setCookie: (name: "stars", stars: any) => {},
   saveStars: (stars: number) => {},
+  mathsRecord: new MathsRecord(),
 
   themeStyle: THEME_MATHS,
   theme: "MATHS" as Theme,

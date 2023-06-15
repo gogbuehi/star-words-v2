@@ -1,4 +1,4 @@
-type ProblemEngineConstructorArgs = {
+export type ProblemEngineConstructorArgs = {
   firstNumber: number;
   secondNumber: number;
   operator: string;
@@ -88,6 +88,14 @@ export class ProblemsEngine {
         return `${answer} ${this.operator} ${this.firstNumber} = ${answerText}`;
       default:
         throw new Error('evaluateProblem(): Invalid Operator');
+    }
+  }
+
+  public problemArgs(): ProblemEngineConstructorArgs {
+    return {
+      firstNumber: this.firstNumber,
+      secondNumber: this.secondNumber,
+      operator: this.operator
     }
   }
 

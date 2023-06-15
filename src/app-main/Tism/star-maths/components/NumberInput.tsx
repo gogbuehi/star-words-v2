@@ -15,7 +15,7 @@ export const NumberInput = () => {
     answerText, setAnswerText,
     problem, setProblem,
     addLine,
-    rightCount, setRightCount, saveStars,
+    rightCount, setRightCount, saveStars, mathsRecord,
     theme
   } = useContext(StarMathsContext);
 
@@ -47,6 +47,7 @@ export const NumberInput = () => {
         if (answerText === '') {
           return;
         }
+        mathsRecord.recordResponse(problem, parseInt(answerText));
         if (problem.checkAnswer(answerText)) {
           addLine({line: problem.toAnswerString()});
           const nextSequenceNumber = sequenceNumber !== -1 ? (sequenceNumber+1)%(MAX_NUMBER+1) : sequenceNumber;

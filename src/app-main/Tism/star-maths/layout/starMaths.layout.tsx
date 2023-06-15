@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {getBorderColor, Theme} from "../../hooks/useTheme";
+import {getBorderColor, getColor, Theme} from "../../hooks/useTheme";
 import { ReactElement } from "react";
 
 export const BASE_UNIT = 80;
@@ -46,6 +46,7 @@ export const BaseContainer = styled.div`
   border: solid 1px ${getBorderColor};
   border-radius: 20px;
   // Colours
+  color: ${getColor};
 `;
 
 const CenteredText = styled.div`
