@@ -118,7 +118,7 @@ const TableA = styled.table`
 const CellA = styled.td`
   padding: 2px;
   text-align: center;
-  font-size: 8pt;
+  font-size: 16pt;
   //border-radius: 5px;
   width: ${(props: CellProps) => (props.size || '50')}px;
   height: ${(props: CellProps) => (props.size || '50')}px;

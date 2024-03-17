@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {getBorderColor, getColor, Theme} from "../../hooks/useTheme";
 import { ReactElement } from "react";
 
-export const BASE_UNIT = 40;
+export const BASE_UNIT = 80;
 
 export const  StarMathsContainer = styled.div`
   width: 100%;

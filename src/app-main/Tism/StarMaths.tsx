@@ -1,6 +1,5 @@
 import {
-  HeadingMultiplierContainer, MultiplierContainer,
-  StarMathsContainer
+  HeadingMultiplierContainer
 } from "./star-maths/layout/starMaths.layout";
 import {LevelNumberInfo} from "./star-maths/components/LevelNumberInfo";
 import {PromptAndResponse} from "./star-maths/components/PromptAndResponse";
@@ -21,22 +20,25 @@ export const StarMaths = () => {
   const { nav, theme, problem } = useContext(StarMathsContext);
   return <>
     <EzeLearningContainer>
-      <HeadingMultiplierContainer width={7} height={2} theme={theme as Theme} title={'Stars for Elliott'}><CorrectBox rightCount={-1}/></HeadingMultiplierContainer>
-      <HeadingMultiplierContainer width={2} height={2} theme={theme as Theme} title={nav + ' Status'}><LevelNumberInfo /></HeadingMultiplierContainer>
+      <HeadingMultiplierContainer width={7} height={1} theme={theme as Theme} title={'Stars for Elliott'}><CorrectBox rightCount={-1}/></HeadingMultiplierContainer>
+      <HeadingMultiplierContainer width={2} height={1} theme={theme as Theme} title={nav + ' Status'}><LevelNumberInfo /></HeadingMultiplierContainer>
     </EzeLearningContainer>
     <EzeLearningContainer>
-      <HeadingMultiplierContainer width={6} height={3} theme={theme as Theme} title={problem.toString()}><PromptAndResponse /></HeadingMultiplierContainer>
-      <HeadingMultiplierContainer width={3} height={3} theme={theme as Theme}><TextInput /></HeadingMultiplierContainer>
+      <HeadingMultiplierContainer width={6} height={2} theme={theme as Theme} title={problem.toString()}><PromptAndResponse /></HeadingMultiplierContainer>
+      <HeadingMultiplierContainer width={3} height={2} theme={theme as Theme}><TextInput /></HeadingMultiplierContainer>
     </EzeLearningContainer>
     <EzeLearningContainer>
       <HeadingMultiplierContainer width={6} height={1} theme={theme as Theme}><OperatorInput /></HeadingMultiplierContainer>
+    </EzeLearningContainer>
+    <EzeLearningContainer>
+
+      <HeadingMultiplierContainer width={7} height={7} theme={theme as Theme}><TimesTable pixels={40} /></HeadingMultiplierContainer>
       <HeadingMultiplierContainer width={3} height={4} theme={theme as Theme}><NumberInput /></HeadingMultiplierContainer>
+
     </EzeLearningContainer>
 
-    <StarMathsContainer>
-
-
-      <HeadingMultiplierContainer width={7} height={7} theme={theme as Theme}><TimesTable pixels={17} /></HeadingMultiplierContainer>
-    </StarMathsContainer>
+    {/*<StarMathsContainer>*/}
+    {/*  <HeadingMultiplierContainer width={7} height={7} theme={theme as Theme}><TimesTable pixels={40} /></HeadingMultiplierContainer>*/}
+    {/*</StarMathsContainer>*/}
   </>;
 }
