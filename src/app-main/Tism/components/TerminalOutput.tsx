@@ -9,7 +9,11 @@ const TerminalOutput = (props: TerminalOutputProps) => {
   const { lines } = props;
   return (
     <TerminalOutputContainer>
-      {lines.map((lineItem, index) => {
+      {lines
+        .filter((lineItem) => {
+          return lineItem.line !== '' && lineItem.line.match(/[^?]$/);
+        })
+        .map((lineItem, index) => {
         const {line, color}  = lineItem;
         const colorToUse = color ? 'greenyellow' : 'red';
         const OutputComponent = index === 0 ? OutputEntry : OutputEntryPast;

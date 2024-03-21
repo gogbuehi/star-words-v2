@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {BASE_UNIT} from "./starMaths.layout";
-import {getButtonBgColor} from "../../hooks/useTheme";
+import {getAltColor, getButtonBgColor, getButtonColor} from "../../hooks/useTheme";
 
 export const NumTable = styled.table`
   margin:0px;
@@ -21,4 +21,11 @@ export const NumCell = styled.td`
   font-size: large;
   font-weight: bolder;
   cursor: pointer;
+`;
+
+export const NumRowCell = styled(NumCell)`
+    // width: ${BASE_UNIT * 3}px;
+    height: ${BASE_UNIT}px;
+    background-color: ${getButtonColor};
+    color: ${getAltColor};
 `;

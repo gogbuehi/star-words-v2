@@ -1,9 +1,10 @@
-import {NumCell, NumTable} from "../layout/NumberInput.layout";
+import {NumCell, NumRowCell, NumTable} from "../layout/NumberInput.layout";
 import {useContext} from "react";
 import {StarMathsContext} from "../contexts/StarMathsContext";
 import {ProblemsEngine} from "../../engine/ProblemsEngine";
 import {MAX_LEVEL, MAX_NUMBER} from "../../hooks/useLevel";
 import {DEFAULT_SEQUENCE} from "../../hooks/useMathDevice";
+import {OperatorInput} from "./OperatorInput";
 
 export const NumberInput = () => {
   const {
@@ -118,28 +119,31 @@ export const NumberInput = () => {
   return (<NumTable>
     <tbody>
     <tr>
-      {[7,8,9].map((num) => (
+      <NumRowCell colSpan={3}><OperatorInput/></NumRowCell>
+    </tr>
+    <tr>
+      {[7, 8, 9].map((num) => (
         <NumCell
           key={`${num}`}
           theme={theme} onClick={clickMethod(`${num}`)}>{num}</NumCell>
       ))}
     </tr>
     <tr>
-      {[4,5,6].map((num) => (
+      {[4, 5, 6].map((num) => (
         <NumCell
           key={`${num}`}
           theme={theme} onClick={clickMethod(`${num}`)}>{num}</NumCell>
       ))}
     </tr>
     <tr>
-      {[1,2,3].map((num) => (
+      {[1, 2, 3].map((num) => (
         <NumCell
           key={`${num}`}
           theme={theme} onClick={clickMethod(`${num}`)}>{num}</NumCell>
       ))}
     </tr>
     <tr>
-      {['-','0',''].map((num) => (
+      {['-', '0', ''].map((num) => (
         <NumCell
           key={`${num}`}
           theme={theme} onClick={clickMethod(`${num}`)}>{num === '-' ? '<' : num || 'GO'}</NumCell>

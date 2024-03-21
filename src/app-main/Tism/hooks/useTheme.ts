@@ -20,6 +20,7 @@ export type ThemeProp = {
 }
 export type ThemeProps = {
   color: string;
+  altColor: string;
   borderColor: string;
   buttonBgColor: string;
   buttonColor: string;
@@ -35,18 +36,21 @@ const COLOUR_DARK_GREEN = "#405030";
 const COLOUR_DARK_PURPLE = "#503040";
 export const THEME_MATHS: ThemeProps = {
   color: COLOUR_LIGHT_BLUE,
+  altColor: COLOUR_LIGHT_YELLOW,
   borderColor: COLOUR_DARK_BLUE,
   buttonBgColor: COLOUR_LIGHT_BLUE,
   buttonColor: COLOUR_DARK_GRAY
 }
 export const THEME_WORDS: ThemeProps = {
   color: COLOUR_LIGHT_YELLOW,
+  altColor: COLOUR_LIGHT_BLUE,
   borderColor: COLOUR_LIGHT_YELLOW,
   buttonBgColor: COLOUR_LIGHT_YELLOW,
   buttonColor: COLOUR_DARK_GREEN
 }
 export const THEME_NAV: ThemeProps = {
   color: COLOUR_LIGHT_GRAY,
+  altColor: COLOUR_LIGHT_YELLOW,
   borderColor: COLOUR_LIGHT_GRAY,
   buttonBgColor: COLOUR_LIGHT_GRAY,
   buttonColor: COLOUR_DARK_PURPLE
@@ -78,4 +82,9 @@ export const getButtonColor = ({theme}: ThemeProp): string => {
 export const getColor = ({theme}: ThemeProp): string => {
   const {color}:ThemeProps = getTheme(theme);
   return color;
+}
+
+export const getAltColor = ({theme}: ThemeProp): string => {
+  const {altColor}:ThemeProps = getTheme(theme);
+  return altColor;
 }

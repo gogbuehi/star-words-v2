@@ -10,7 +10,6 @@ import {Theme} from "./hooks/useTheme";
 import {NumberInput} from "./star-maths/components/NumberInput";
 import {TextInput} from "./star-maths/components/TextInput";
 import CorrectBox from "./components/CorrectBox";
-import {OperatorInput} from "./star-maths/components/OperatorInput";
 import {TimesTable} from "../../TimesTable";
 import {useContext} from "react";
 import {EzeLearningContainer} from "./star-maths/layout/ezeLearningMaths.layout";
@@ -27,13 +26,13 @@ export const StarMaths = () => {
       <HeadingMultiplierContainer width={6} height={2} theme={theme as Theme} title={problem.toString()}><PromptAndResponse /></HeadingMultiplierContainer>
       <HeadingMultiplierContainer width={3} height={2} theme={theme as Theme}><TextInput /></HeadingMultiplierContainer>
     </EzeLearningContainer>
-    <EzeLearningContainer>
-      <HeadingMultiplierContainer width={6} height={1} theme={theme as Theme}><OperatorInput /></HeadingMultiplierContainer>
-    </EzeLearningContainer>
+    {/*<EzeLearningContainer>*/}
+    {/*  <HeadingMultiplierContainer width={6} height={1} theme={theme as Theme}><OperatorInput /></HeadingMultiplierContainer>*/}
+    {/*</EzeLearningContainer>*/}
     <EzeLearningContainer>
 
       <HeadingMultiplierContainer width={7} height={7} theme={theme as Theme}><TimesTable pixels={40} /></HeadingMultiplierContainer>
-      <HeadingMultiplierContainer width={3} height={4} theme={theme as Theme}><NumberInput /></HeadingMultiplierContainer>
+      <HeadingMultiplierContainer width={3} height={7} theme={theme as Theme}><NumberInput /></HeadingMultiplierContainer>
 
     </EzeLearningContainer>
 
